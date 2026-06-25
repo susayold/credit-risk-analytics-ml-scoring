@@ -89,7 +89,7 @@ Python remains the modeling layer for Logistic Regression, LightGBM, SHAP, and m
 Power BI dashboard:
 
 ```text
-dashboard/credit_risk_dashboard.pbix
+dashboard/dashboard.pbix
 ```
 
 This file is larger than normal GitHub file limits and should be tracked using Git LFS.
@@ -105,4 +105,3 @@ git add .gitattributes
 ```
 
 Then commit and push normally.
-

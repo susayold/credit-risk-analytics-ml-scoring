@@ -19,7 +19,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v3.pdf"
+OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v4.pdf"
 
 NAVY = colors.HexColor("#172052")
 PURPLE = colors.HexColor("#6D45F6")
@@ -374,8 +374,8 @@ def build():
     story += [section_band("5. Dashboard Evidence: Five Core Risk Signals"), Spacer(1, 10)]
     story += [
         p(
-            "This is the main DA evidence layer of the project. The dashboard translates the 271-feature master table into business-readable risk signals. "
-            "Each dashboard below includes the enlarged chart and the supporting data table used to read the decision implication.",
+            "This is the main DA evidence layer of the project. The actual interactive Power BI dashboard is included as <b>dashboard/dashboard.pbix</b>. "
+            "The PDF shows enlarged dashboard evidence charts plus the supporting data tables so the report can be reviewed without opening Power BI.",
             "body",
         ),
         callout(
@@ -662,7 +662,7 @@ def build():
         ["sql/", "SQL ETL implementation for cleaning, feature engineering, historical aggregation, and master table."],
         ["src/", "Python scripts for data understanding, cleaning, descriptive analytics, master build, and diagnostic analytics."],
         ["notebooks/step08_machine_learning_governance.ipynb", "ML benchmarking, scoring, risk bands, SHAP, and governance checks."],
-        ["dashboard/credit_risk_dashboard.pbix", "Power BI dashboard for portfolio and segment monitoring."],
+        ["dashboard/dashboard.pbix", "Main Power BI dashboard file for portfolio and segment monitoring. The dashboard images in this PDF are report snapshots, not a replacement for the PBIX file."],
         ["data/processed/final_customer_analysis_train.csv.gz", "Final labeled customer-level processed data used for analytics/modeling evidence."],
         ["outputs/tables/ and outputs/figures/", "Result tables and charts supporting the presentation and portfolio PDF."],
     ]

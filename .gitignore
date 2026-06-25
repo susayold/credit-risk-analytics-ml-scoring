@@ -23,7 +23,12 @@ outputs/**/tmp/
 outputs/**/temp/
 *.log
 
+# Superseded portfolio drafts kept only locally if a PDF viewer locks them.
+reports/portfolio_credit_risk_analytics_ml_scoring.pdf
+reports/portfolio_credit_risk_analytics_ml_scoring_detailed.pdf
+reports/portfolio_credit_risk_analytics_ml_scoring_detailed_v2.pdf
+reports/portfolio_credit_risk_analytics_ml_scoring_detailed_v3.pdf
+
 # Keep Git LFS-tracked processed outputs and dashboards.
 !data/processed/*.csv.gz
 !dashboard/*.pbix
-
