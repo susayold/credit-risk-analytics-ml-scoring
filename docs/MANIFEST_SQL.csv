@@ -1,0 +1,11 @@
+file_name,folder,purpose,cv_evidence
+01_create_base_application.sql,sql,Creates the labeled application base table from application_train,Supports 307K+ labeled loan application base
+02_cleaning_missing_flags.sql,sql,Creates cleaning and missing-value flags,Supports data cleaning and missing-value flagging claim
+03_feature_engineering_application.sql,sql,Creates application-level engineered features and ratios,Supports feature engineering claim
+04_aggregate_bureau_and_bureau_balance.sql,sql,Aggregates bureau and bureau_balance histories to customer level,Supports SQL joins and aggregation claim
+05_aggregate_previous_pos_installments_credit_card.sql,sql,Aggregates previous application POS installment and credit card histories,Supports multi-table historical data consolidation claim
+06_build_customer_master_table.sql,sql,Builds customer-level master table through left joins,Supports 271-feature master-table logic
+07_descriptive_statistics_and_segments.sql,sql,Creates descriptive statistics and quantile risk segment queries,Supports dashboarding and segmentation claim
+README_SQL_PIPELINE.md,docs,Explains SQL package scope,Supports interview explanation
+SQL_TO_PYTHON_MAPPING.md,docs,Maps SQL scripts to original Python pipeline,Supports defensible CV explanation
+

@@ -1,0 +1,39 @@
+file,check,count,total_rows,pct,severity,note
+POS_CASH_balance.csv,future_instalment_greater_than_total,7420,10001358,0.07418992500818389,review,Installment count and DPD plausibility
+POS_CASH_balance.csv,negative_cnt_instalment,0,10001358,0.0,review,Installment count and DPD plausibility
+POS_CASH_balance.csv,negative_sk_dpd,0,10001358,0.0,review,Installment count and DPD plausibility
+POS_CASH_balance.csv,negative_sk_dpd_def,0,10001358,0.0,review,Installment count and DPD plausibility
+POS_CASH_balance.csv,sk_dpd_def_greater_than_sk_dpd,0,10001358,0.0,review,Installment count and DPD plausibility
+bureau.csv,debt_greater_than_credit_sum,29642,1716428,1.7269585441393405,review,Business plausibility check
+bureau.csv,negative_debt,8418,1716428,0.4904371170826856,review,Business plausibility check
+bureau.csv,bad_debt_status,21,1716428,0.0012234710689874554,review,Business plausibility check
+bureau.csv,negative_credit_day_overdue,0,1716428,0.0,review,Business plausibility check
+bureau.csv,negative_credit_sum,0,1716428,0.0,review,Business plausibility check
+bureau.csv,negative_overdue_amount,0,1716428,0.0,review,Business plausibility check
+credit_card_balance.csv,zero_credit_limit,753823,3840312,19.62921241815769,review,Credit card balance plausibility check
+credit_card_balance.csv,credit_utilization_gt_1,334362,3840312,8.706636335797716,review,Credit card balance plausibility check
+credit_card_balance.csv,negative_total_receivable,109330,3840312,2.8469041057080777,review,Credit card balance plausibility check
+credit_card_balance.csv,positive_balance_with_zero_limit,7992,3840312,0.20810809121758855,review,Credit card balance plausibility check
+credit_card_balance.csv,negative_balance,2345,3840312,0.06106274698514079,review,Credit card balance plausibility check
+credit_card_balance.csv,negative_sk_dpd,0,3840312,0.0,review,Credit card balance plausibility check
+credit_card_balance.csv,negative_sk_dpd_def,0,3840312,0.0,review,Credit card balance plausibility check
+credit_card_balance.csv,sk_dpd_def_greater_than_sk_dpd,0,3840312,0.0,review,Credit card balance plausibility check
+installments_payments.csv,underpayment_rows,1295493,13605401,9.521902368037518,signal,Payment behavior or payment data quality check
+installments_payments.csv,late_payment_rows,1146669,13605401,8.428042657471103,signal,Payment behavior or payment data quality check
+installments_payments.csv,missing_payment_date,2905,13605401,0.02135181462126695,review,Payment behavior or payment data quality check
+installments_payments.csv,missing_payment_amount,2905,13605401,0.02135181462126695,review,Payment behavior or payment data quality check
+installments_payments.csv,zero_payment_amount,1440,13605401,0.010584032032572946,review,Payment behavior or payment data quality check
+installments_payments.csv,zero_instalment_amount,290,13605401,0.002131506451004274,review,Payment behavior or payment data quality check
+installments_payments.csv,negative_instalment_amount,0,13605401,0.0,review,Payment behavior or payment data quality check
+installments_payments.csv,negative_payment_amount,0,13605401,0.0,review,Payment behavior or payment data quality check
+previous_application.csv,DAYS_FIRST_DRAWING_365243,934444,1670214,55.94756121071911,high,Special date or amount plausibility check
+previous_application.csv,AMT_APPLICATION_zero,392402,1670214,23.49411512536717,review,Special date or amount plausibility check
+previous_application.csv,AMT_CREDIT_zero,336768,1670214,20.163164720209505,review,Special date or amount plausibility check
+previous_application.csv,DAYS_TERMINATION_365243,225913,1670214,13.525991280159309,high,Special date or amount plausibility check
+previous_application.csv,DAYS_LAST_DUE_365243,211221,1670214,12.646343522446823,high,Special date or amount plausibility check
+previous_application.csv,DAYS_LAST_DUE_1ST_VERSION_365243,93864,1670214,5.619878650280742,high,Special date or amount plausibility check
+previous_application.csv,DAYS_FIRST_DUE_365243,40645,1670214,2.4335204949784877,high,Special date or amount plausibility check
+previous_application.csv,AMT_ANNUITY_zero,1637,1670214,0.09801139255209212,review,Special date or amount plausibility check
+previous_application.csv,AMT_APPLICATION_negative,0,1670214,0.0,review,Special date or amount plausibility check
+previous_application.csv,AMT_CREDIT_negative,0,1670214,0.0,review,Special date or amount plausibility check
+previous_application.csv,AMT_ANNUITY_negative,0,1670214,0.0,review,Special date or amount plausibility check

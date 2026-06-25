@@ -1,0 +1,2 @@
+rows,columns,matrix_rank,is_full_rank,target_default_rate
+307511,52,52,True,0.08072881945686496

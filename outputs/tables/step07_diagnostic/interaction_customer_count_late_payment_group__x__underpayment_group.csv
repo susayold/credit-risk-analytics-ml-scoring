@@ -1,0 +1,6 @@
+﻿DIAG_LATE_PAYMENT_GROUP,No installment history,No underpayment,Underpay 10%-30%,Underpay <=10%,Underpay >30%
+Late 10%-30%,,7340.0,32597.0,6915.0,13358.0
+Late <=10%,,23712.0,14387.0,39024.0,16.0
+Late >30%,,1890.0,2140.0,356.0,13264.0
+No installment history,15868.0,,,,
+No late payment,,133555.0,382.0,2689.0,18.0

@@ -1,0 +1,43 @@
+﻿source_variable,encoded_feature,vif,tolerance,vif_risk_level,n_rows_used,note
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Secondary / secondary special,386.2995263507317,0.002588664835928567,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Higher education,346.1539035750607,0.002888888409669943,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Incomplete higher,61.576911292683086,0.016239853201581833,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Lower secondary,23.97964298713652,0.041702038705765276,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CREDIT_INCOME_GROUP,DIAG_CREDIT_INCOME_GROUP_3. 2x-4x,7.176128670168761,0.13935090157413288,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_LATE_PAYMENT_GROUP,DIAG_LATE_PAYMENT_GROUP_No installment history,6.864799297197944,0.1456706826677624,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_PREVIOUS_REFUSAL_GROUP,DIAG_PREVIOUS_REFUSAL_GROUP_No previous application,6.62491019638544,0.1509454423315204,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CREDIT_INCOME_GROUP,DIAG_CREDIT_INCOME_GROUP_5. >6x,6.1335563100709,0.16303755104653805,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CREDIT_INCOME_GROUP,DIAG_CREDIT_INCOME_GROUP_4. 4x-6x,5.890904023919419,0.1697532324308122,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CREDIT_INCOME_GROUP,DIAG_CREDIT_INCOME_GROUP_2. 1x-2x,4.129906178223117,0.24213625124778204,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_ANNUITY_INCOME_GROUP,DIAG_ANNUITY_INCOME_GROUP_3. 20-30%,3.648024188138573,0.2741209894527197,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_ANNUITY_INCOME_GROUP,DIAG_ANNUITY_INCOME_GROUP_2. 10-20%,3.2039221722210414,0.31211744425950716,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CC_UTILIZATION_GROUP,DIAG_CC_UTILIZATION_GROUP_No credit card history,3.147803213155658,0.31768186645870555,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_AGE_GROUP,DIAG_AGE_GROUP_5. 61+,2.5992562305155364,0.38472544117039975,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_INCOME_TYPE,DIAG_NAME_INCOME_TYPE_Pensioner,2.494196141994845,0.4009307781224476,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_AGE_GROUP,DIAG_AGE_GROUP_4. 51-60,2.3626637203484386,0.4232510921412561,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_ANNUITY_INCOME_GROUP,DIAG_ANNUITY_INCOME_GROUP_4. 30-40%,2.292395938189498,0.43622481759838827,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_AGE_GROUP,DIAG_AGE_GROUP_3. 41-50,2.142716929393099,0.46669720404143117,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_AGE_GROUP,DIAG_AGE_GROUP_2. 31-40,2.1320570599574733,0.46903059903094074,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CC_UTILIZATION_GROUP,DIAG_CC_UTILIZATION_GROUP_Zero/no utilization,1.9745601291755883,0.5064419083644298,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_LATE_PAYMENT_GROUP,DIAG_LATE_PAYMENT_GROUP_No late payment,1.8742793151044321,0.5335384069712584,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_BUREAU_DEBT_CREDIT_GROUP,DIAG_BUREAU_DEBT_CREDIT_GROUP_No bureau debt,1.773588699982686,0.563828581006274,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_LATE_PAYMENT_GROUP,DIAG_LATE_PAYMENT_GROUP_Late <=10%,1.770464837623164,0.564823417415334,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CC_UTILIZATION_GROUP,DIAG_CC_UTILIZATION_GROUP_<=30%,1.6979467874958991,0.5889466073755949,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_BUREAU_DEBT_CREDIT_GROUP,DIAG_BUREAU_DEBT_CREDIT_GROUP_<=25%,1.660765406005937,0.6021320027402023,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_BUREAU_DEBT_CREDIT_GROUP,DIAG_BUREAU_DEBT_CREDIT_GROUP_50%-100%,1.647844395826003,0.6068534156095104,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_INCOME_TYPE,DIAG_NAME_INCOME_TYPE_Working,1.592941136053065,0.6277695875679159,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CC_UTILIZATION_GROUP,DIAG_CC_UTILIZATION_GROUP_70%-100%,1.5396985338711284,0.6494777893213862,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_BUREAU_DEBT_CREDIT_GROUP,DIAG_BUREAU_DEBT_CREDIT_GROUP_No bureau history,1.534035851592434,0.6518752472192431,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_ANNUITY_INCOME_GROUP,DIAG_ANNUITY_INCOME_GROUP_5. 40-60%,1.4686826078525994,0.6808823054438746,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_LATE_PAYMENT_GROUP,DIAG_LATE_PAYMENT_GROUP_Late >30%,1.2354376594113237,0.8094297534013105,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_INCOME_TYPE,DIAG_NAME_INCOME_TYPE_State servant,1.2224983421855025,0.8179970192943292,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_CONTRACT_TYPE,DIAG_NAME_CONTRACT_TYPE_Revolving loans,1.174437977360084,0.8514711030103201,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_PREVIOUS_REFUSAL_GROUP,DIAG_PREVIOUS_REFUSAL_GROUP_<=25% refusal,1.1143013133612893,0.8974233342537311,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_PREVIOUS_REFUSAL_GROUP,DIAG_PREVIOUS_REFUSAL_GROUP_25%-50% refusal,1.0794477278972239,0.9263996524852677,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_ANNUITY_INCOME_GROUP,DIAG_ANNUITY_INCOME_GROUP_6. 60%+,1.073797217661362,0.9312745307516386,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CC_UTILIZATION_GROUP,DIAG_CC_UTILIZATION_GROUP_>100%,1.0411716147091497,0.960456456815094,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CC_UTILIZATION_GROUP,DIAG_CC_UTILIZATION_GROUP_Unknown,1.0356238970600622,0.9656015111652101,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_PREVIOUS_REFUSAL_GROUP,DIAG_PREVIOUS_REFUSAL_GROUP_>50% refusal,1.0322012422296172,0.9688033293197162,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_BUREAU_DEBT_CREDIT_GROUP,DIAG_BUREAU_DEBT_CREDIT_GROUP_>100%,1.0240625811628126,0.9765028215995455,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_INCOME_TYPE,DIAG_NAME_INCOME_TYPE_Other rare,1.0030148167761392,0.9969942450243862,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_ANNUITY_INCOME_GROUP,DIAG_ANNUITY_INCOME_GROUP_Other rare,1.0004929618933416,0.9995072809983504,Low,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.

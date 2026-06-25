@@ -1,0 +1,7 @@
+﻿key,value
+DATASET,"307,511 customers | 24,825 defaults | 8.07% default rate"
+MISSING,67 cột có missing | 50 cột >30% missing | 63 cột có tín hiệu rủi ro khi missing
+SENTINEL_DAYS_EMPLOYED,"55,374 rows (18.01%) | default rate: 5.4% vs others: 8.66% | diff: +-3.26pp"
+PAYMENT_BEHAVIOR_SIGNAL,"Late payment: 1,146,669 rows (8.43%) | Underpayment: 1,295,493 rows (9.52%)"
+EXTREME_AFFORDABILITY,"Credit/Income >10x: 9,844 (3.20%) | Annuity/Income >50%: 2,530 (0.82%)"
+PSI_DRIFT,HIGH drift: 0 cols | MODERATE drift: 1 cols

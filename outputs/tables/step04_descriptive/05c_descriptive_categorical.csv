@@ -1,0 +1,17 @@
+﻿feature,count,missing,missing_pct,n_unique,mode,mode_freq,mode_pct,entropy_bits,top3
+ORGANIZATION_TYPE,307511,0,0.0,58,Business Entity Type 3,67992,22.11,4.1023,Business Entity Type 3 (67992) | XNA (55374) | Self-employed (38412)
+OCCUPATION_TYPE,211120,96391,31.346,18,Laborers,55186,26.14,3.3012,Laborers (55186) | Sales staff (32102) | Core staff (27570)
+NAME_INCOME_TYPE,307511,0,0.0,8,Working,158774,51.632,1.6998,Working (158774) | Commercial associate (71617) | Pensioner (55362)
+NAME_TYPE_SUITE,306219,1292,0.42,7,Unaccompanied,248526,81.16,0.9509,"Unaccompanied (248526) | Family (40149) | Spouse, partner (11370)"
+WALLSMATERIAL_MODE,151170,156341,50.841,7,Panel,66040,43.686,1.7008,"Panel (66040) | Stone, brick (64815) | Block (9253)"
+WEEKDAY_APPR_PROCESS_START,307511,0,0.0,7,TUESDAY,53901,17.528,2.7322,TUESDAY (53901) | WEDNESDAY (51934) | MONDAY (50714)
+NAME_FAMILY_STATUS,307511,0,0.0,6,Married,196432,63.878,1.6242,Married (196432) | Single / not married (45444) | Civil marriage (29775)
+NAME_HOUSING_TYPE,307511,0,0.0,6,House / apartment,272868,88.734,0.7209,House / apartment (272868) | With parents (14840) | Municipal apartment (11183)
+NAME_EDUCATION_TYPE,307511,0,0.0,5,Secondary / secondary special,218391,71.019,1.0951,Secondary / secondary special (218391) | Higher education (74863) | Incomplete higher (10277)
+FONDKAPREMONT_MODE,97216,210295,68.386,4,reg oper account,73830,75.944,1.1526,reg oper account (73830) | reg oper spec account (12080) | not specified (5687)
+HOUSETYPE_MODE,153214,154297,50.176,3,block of flats,150503,98.231,0.1458,block of flats (150503) | specific housing (1499) | terraced house (1212)
+FLAG_OWN_REALTY,307511,0,0.0,2,Y,213312,69.367,0.8889,Y (213312) | N (94199)
+NAME_CONTRACT_TYPE,307511,0,0.0,2,Cash loans,278232,90.479,0.4536,Cash loans (278232) | Revolving loans (29279)
+CODE_GENDER,307507,4,0.001,2,F,202448,65.835,0.9264,F (202448) | M (105059)
+FLAG_OWN_CAR,307511,0,0.0,2,N,202924,65.989,0.9249,N (202924) | Y (104587)
+EMERGENCYSTATE_MODE,161756,145755,47.398,2,No,159428,98.561,0.1087,No (159428) | Yes (2328)

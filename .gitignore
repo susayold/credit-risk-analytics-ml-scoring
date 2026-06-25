@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Raw Home Credit data is large. Download separately into data/raw.
+data/raw/*.csv
+data/raw/*.zip
+data/raw/*.7z
+data/raw/*.parquet
+
+# Temporary outputs
+outputs/**/tmp/
+outputs/**/temp/
+*.log
+
+# Keep Git LFS-tracked processed outputs and dashboards.
+!data/processed/*.csv.gz
+!dashboard/*.pbix
+

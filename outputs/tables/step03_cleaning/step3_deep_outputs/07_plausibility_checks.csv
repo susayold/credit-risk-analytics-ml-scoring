@@ -1,0 +1,17 @@
+﻿check,count,total,pct,severity,note
+DAYS_EMPLOYED sentinel (365243),55374,307511,18.0072,HIGH,Home Credit sentinel for unknown employment — must replace NaN + flag
+Age < 21 years,1,307511,0.0003,REVIEW,Very young applicants — plausible but edge case
+Age > 69 years,1,307511,0.0003,REVIEW,Senior applicants — check if any are anomalies
+"DAYS_EMPLOYED > 0 (positive, not sentinel)",0,307511,0.0,REVIEW,Positive days_employed (unusual — normally negative or sentinel)
+Credit-Income Ratio > 10,9844,307511,3.2012,HIGH,Extreme debt burden — credit > 10x annual income
+Credit-Income Ratio > 20,235,307511,0.0764,HIGH,Very extreme debt burden
+Annuity-Income Ratio > 0.5,2530,307511,0.8227,HIGH,Monthly payment > 50% of income — extreme stress
+AMT_INCOME_TOTAL = 0,0,307511,0.0,HIGH,Zero income — likely error
+AMT_CREDIT = 0,0,307511,0.0,HIGH,Zero loan amount — likely error
+AMT_GOODS_PRICE > AMT_CREDIT,260,307511,0.0845,REVIEW,Goods price exceeds credit — loan doesn't cover full goods price
+AMT_ANNUITY > AMT_INCOME_TOTAL/12,272324,307511,88.5575,HIGH,Monthly payment > monthly income — technically cannot afford
+[inst] Late payment rows,1146669,13605401,8.428,SIGNAL,Trả chậm — behavioral signal
+[inst] Underpayment rows,1295493,13605401,9.5219,SIGNAL,Trả thiếu — behavioral signal
+[inst] Missing payment date,2905,13605401,0.0214,REVIEW,No payment recorded
+[inst] Zero installment amount,290,13605401,0.0021,REVIEW,Potential system record
+[inst] Zero payment amount,1440,13605401,0.0106,REVIEW,Missed payment possible

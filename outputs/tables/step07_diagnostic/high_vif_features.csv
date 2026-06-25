@@ -1,0 +1,10 @@
+﻿source_variable,encoded_feature,vif,tolerance,vif_risk_level,n_rows_used,note
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Secondary / secondary special,386.2995263507317,0.002588664835928567,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Higher education,346.1539035750607,0.002888888409669943,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Incomplete higher,61.576911292683086,0.016239853201581833,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_NAME_EDUCATION_TYPE,DIAG_NAME_EDUCATION_TYPE_Lower secondary,23.97964298713652,0.041702038705765276,High,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CREDIT_INCOME_GROUP,DIAG_CREDIT_INCOME_GROUP_3. 2x-4x,7.176128670168761,0.13935090157413288,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_LATE_PAYMENT_GROUP,DIAG_LATE_PAYMENT_GROUP_No installment history,6.864799297197944,0.1456706826677624,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_PREVIOUS_REFUSAL_GROUP,DIAG_PREVIOUS_REFUSAL_GROUP_No previous application,6.62491019638544,0.1509454423315204,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CREDIT_INCOME_GROUP,DIAG_CREDIT_INCOME_GROUP_5. >6x,6.1335563100709,0.16303755104653805,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.
+DIAG_CREDIT_INCOME_GROUP,DIAG_CREDIT_INCOME_GROUP_4. 4x-6x,5.890904023919419,0.1697532324308122,Moderate,307511,VIF is calculated on one-hot encoded controlled-core research features with drop_first=True.

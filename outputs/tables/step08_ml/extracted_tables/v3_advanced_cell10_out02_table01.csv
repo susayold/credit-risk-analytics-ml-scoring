@@ -1,0 +1,4 @@
+﻿model,weight
+LightGBM v3,0.85
+CatBoost v3,0.0
+XGBoost v3,0.15

@@ -1,0 +1,33 @@
+feature,dtype,missing_count,missing_pct,n_unique,role,treatment
+D7_AGE_GROUP,object,0,0.0,5,categorical_group,categorical group with Unknown/No-history level
+D7_ANNUITY_INCOME_GROUP,object,0,0.0,7,categorical_group,categorical group with Unknown/No-history level
+D7_CREDIT_INCOME_GROUP,object,0,0.0,5,categorical_group,categorical group with Unknown/No-history level
+D7_RISK_SIGNAL_GROUP_REBUILT,object,0,0.0,4,categorical_group,categorical group with Unknown/No-history level
+AMT_ANNUITY,float64,12,3.9022994299390916e-05,13672,numeric,median impute if used as standardized continuous
+AMT_CREDIT,float64,0,0.0,5603,numeric,median impute if used as standardized continuous
+AMT_GOODS_PRICE,float64,278,0.0009040327012692228,1002,numeric,median impute if used as standardized continuous
+APP_AGE_YEARS,float64,0,0.0,17460,numeric,median impute if used as standardized continuous
+APP_ANNUITY_INCOME_RATIO,float64,12,3.9022994299390916e-05,88811,numeric,median impute if used as standardized continuous
+APP_CREDIT_INCOME_RATIO,float64,0,0.0,48697,numeric,median impute if used as standardized continuous
+BUREAU_ACTIVE_COUNT,float64,0,0.0,23,numeric,median impute if used as standardized continuous
+BUREAU_DEBT_TO_CREDIT_SUM_RATIO,float64,0,0.0,184777,numeric,median impute if used as standardized continuous
+BUREAU_LOAN_COUNT,float64,0,0.0,61,numeric,median impute if used as standardized continuous
+CC_UTILIZATION_MEAN,float64,221475,0.7202181385381335,59104,numeric,not in main logit as continuous; represented by grouped feature
+D7_BUREAU_ACTIVE_GROUP,str,0,0.0,5,numeric,categorical group with Unknown/No-history level
+D7_BUREAU_DEBT_CREDIT_GROUP,str,0,0.0,6,numeric,categorical group with Unknown/No-history level
+D7_BUREAU_OVERDUE_GROUP,str,0,0.0,4,numeric,categorical group with Unknown/No-history level
+D7_CC_UTILIZATION_GROUP,str,0,0.0,6,numeric,categorical group with Unknown/No-history level
+D7_CONTRACT_TYPE,str,0,0.0,2,numeric,categorical group with Unknown/No-history level
+D7_EDUCATION_GROUP,str,0,0.0,4,numeric,categorical group with Unknown/No-history level
+D7_INCOME_TYPE_GROUP,str,0,0.0,5,numeric,categorical group with Unknown/No-history level
+D7_LATE_PAYMENT_GROUP,str,0,0.0,5,numeric,categorical group with Unknown/No-history level
+D7_OCCUPATION_GROUP,str,0,0.0,12,numeric,categorical group with Unknown/No-history level
+D7_PAYMENT_RATIO_GROUP,str,0,0.0,6,numeric,categorical group with Unknown/No-history level
+D7_POS_DPD_GROUP,str,0,0.0,5,numeric,categorical group with Unknown/No-history level
+D7_PREV_REFUSAL_GROUP,str,0,0.0,5,numeric,categorical group with Unknown/No-history level
+D7_UNDERPAYMENT_GROUP,str,0,0.0,5,numeric,categorical group with Unknown/No-history level
+INST_LATE_PAYMENT_RATE,float64,15868,0.051601406128561254,4972,numeric,median impute if used as standardized continuous
+INST_PAYMENT_RATIO_MEAN,float64,15879,0.05163717720666903,42700,numeric,median impute if used as standardized continuous
+INST_UNDERPAYMENT_RATE,float64,15868,0.051601406128561254,4892,numeric,median impute if used as standardized continuous
+POS_DPD_MONTH_RATE,float64,18067,0.05875236983392464,2499,numeric,not in main logit as continuous; represented by grouped feature
+PREV_REFUSAL_RATE,float64,16454,0.05350702901684818,397,numeric,median impute if used as standardized continuous

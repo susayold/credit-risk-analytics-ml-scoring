@@ -1,0 +1,4 @@
+name,path,rows,columns
+final_customer_analysis_table,D:\Code\DA\1\step4_outputs\data\final_customer_analysis_table.csv.gz,356255,271
+final_customer_analysis_train,D:\Code\DA\1\step4_outputs\data\final_customer_analysis_train.csv.gz,307511,271
+final_customer_analysis_test,D:\Code\DA\1\step4_outputs\data\final_customer_analysis_test.csv.gz,48744,271

@@ -1,0 +1,36 @@
+﻿group,model_name,status,reason,run_in_step6
+MÃ´ hÃ¬nh cÆ¡ báº£n,Linear Probability Model â€” LPM,run,Applicable: binary TARGET with cross-sectional customer-level features.,True
+MÃ´ hÃ¬nh cÆ¡ báº£n,Binary Logistic Regression / Logit,run,Applicable: standard diagnostic baseline for binary outcome.,True
+MÃ´ hÃ¬nh cÆ¡ báº£n,Probit Model,run,Applicable: binary outcome with normal-CDF link.,True
+MÃ´ hÃ¬nh cÆ¡ báº£n,Complementary Log-Log â€” Cloglog,run,Applicable as rare-event/asymmetric-link diagnostic sensitivity model.,True
+MÃ´ hÃ¬nh regularization,Lasso Logistic Regression,run,Applicable: regularized Logit with L1 penalty for sparse signal check.,True
+MÃ´ hÃ¬nh regularization,Ridge Logistic Regression,run,Applicable: regularized Logit with L2 penalty for coefficient stability.,True
+MÃ´ hÃ¬nh regularization,Elastic Net Logistic Regression,run,Applicable: combines L1 and L2 regularization.,True
+MÃ´ hÃ¬nh cho dá»¯ liá»‡u hiáº¿m,Rare Events Logistic Regression,proxy_run,Exact King-Zeng rare-events Logit is not natively available; run weighted Logit as a rare-event sensitivity proxy.,True
+MÃ´ hÃ¬nh cho dá»¯ liá»‡u nhá»,Firth Logistic Regression,not_run,Not suitable for this large dataset; mainly used for small samples or complete separation. Requires specialized package.,False
+Panel data,Pooled Logit,not_run,"Final analytical table is one row per current customer application, not person-period panel data.",False
+Panel data,Fixed Effects Logit,not_run,Requires repeated observations per entity and within-entity TARGET variation.,False
+Panel data,Random Effects Logit,not_run,Requires panel structure and random individual effects.,False
+Panel data,Panel Probit,not_run,Requires panel structure.,False
+Dynamic panel,Dynamic Panel Logit,not_run,Requires time-indexed outcome Y_t and lagged Y_{t-1}; current target is one current application outcome.,False
+MÃ´ hÃ¬nh xá»­ lÃ½ ná»™i sinh,IV-Probit,not_run,Requires valid instrumental variables and an explicit endogeneity hypothesis.,False
+MÃ´ hÃ¬nh xá»­ lÃ½ ná»™i sinh,IV-Logit,not_run,Requires valid instruments/control-function design.,False
+MÃ´ hÃ¬nh xá»­ lÃ½ ná»™i sinh,Control Function Approach,not_run,Requires a clearly endogenous variable and first-stage model.,False
+MÃ´ hÃ¬nh hai phÆ°Æ¡ng trÃ¬nh,Bivariate Probit,not_run,Requires two correlated binary outcomes.,False
+MÃ´ hÃ¬nh hai phÆ°Æ¡ng trÃ¬nh,Recursive Bivariate Probit,not_run,Requires a binary endogenous treatment and a binary outcome with identification strategy.,False
+Machine Learning,Decision Tree Classifier,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,Random Forest Classifier,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,Gradient Boosting Classifier,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,XGBoost,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,LightGBM,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,CatBoost,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,Support Vector Machine â€” SVM,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,K-Nearest Neighbors â€” KNN,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Machine Learning,Naive Bayes,deferred,Out of scope and not a natural fit for this non-text credit-risk table.,False
+Machine Learning,Neural Network,deferred,Out of scope for Diagnostic Analytics; move to Machine Learning Support step.,False
+Bayesian,Bayesian Logistic Regression,not_run,Requires Bayesian modeling framework and prior specification; not needed for current diagnostic scope.,False
+Bayesian / phÃ¢n cáº¥p,Multilevel Logistic Regression,not_run,Requires a defined hierarchy such as branch/region; not available in current final table.,False
+Survival / event history,Discrete-Time Hazard Model,not_run,Requires person-period data and event timing; current TARGET is a one-time binary outcome.,False
+Survival analysis,Cox Proportional Hazards Model,not_run,"Requires time-to-event and censoring information, not just TARGET 0/1.",False
+Credit scoring,WOE Logistic Regression,deferred,"Valid credit-scoring extension, but requires a separate WOE/binning pipeline to avoid mixing diagnostic grouping with scorecard development.",False
+Credit scoring,Logistic Scorecard Model,deferred,Valid later scorecard step after WOE/binning; not part of current diagnostic-only Step 6.,False

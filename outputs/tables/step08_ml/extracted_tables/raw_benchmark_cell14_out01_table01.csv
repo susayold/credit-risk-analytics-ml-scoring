@@ -1,0 +1,19 @@
+﻿model_name,model_group,roc_auc,pr_auc_average_precision,log_loss,brier_score,lift_at_top_10pct,runtime_seconds
+LightGBM oskird-style,Research recipe,0.790037,0.31122,0.260757,0.074362,3.641845,182.224323
+LightGBM NoxMoon-style 3,Research recipe,0.789455,0.310381,0.260966,0.074415,3.621025,110.734948
+LightGBM NoxMoon-style 2,Research recipe,0.78904,0.310767,0.261132,0.07443,3.615819,104.929189
+LightGBM NoxMoon-style 1,Research recipe,0.788607,0.309497,0.261267,0.074472,3.641845,99.041677
+XGBoost - hist baseline,XGBoost,0.787767,0.309572,0.550426,0.186323,3.621025,34.38935
+CatBoost - GPU/CPU baseline,CatBoost,0.787009,0.310148,0.531639,0.178626,3.64358,123.193383
+LightGBM - balanced baseline,LightGBM,0.786366,0.305524,0.538494,0.18202,3.598469,81.057748
+Gradient Boosting Classifier - HistGB,Boosting sklearn,0.784361,0.303275,0.26291,0.074843,3.591529,148.102306
+Logistic Regression - OHE baseline,Linear baseline,0.774471,0.288425,0.618437,0.213378,3.470076,2542.038542
+WOE Logistic Regression,Credit scoring,0.771807,0.277207,0.593333,0.202771,3.364239,184.695271
+Logistic Scorecard Model,Credit scoring,0.771807,0.277207,0.593333,0.202771,3.364239,184.858699
+Random Forest Classifier,Bagging tree,0.762111,0.271313,0.581559,0.198045,3.279222,400.812429
+Support Vector Machine - LinearSVC calibrated,SVM,0.759396,0.269177,0.272005,0.076912,3.265342,73.643759
+Decision Tree Classifier,Tree baseline,0.730672,0.218346,0.645422,0.225858,2.847198,73.711633
+K-Nearest Neighbors - compact SVD,Instance based,0.710932,0.210871,0.291943,0.080703,2.685839,166.85528
+Neural Network - MLP compact,Neural Network,0.705438,0.211649,0.288863,0.080194,2.762181,42.576909
+Naive Bayes - Gaussian compact,Probabilistic baseline,0.65651,0.146952,2.100926,0.19163,1.82873,30.060421
+Dummy Baseline - prior probability,Baseline,0.5,0.093701,0.312751,0.085184,1.001117,0.018962

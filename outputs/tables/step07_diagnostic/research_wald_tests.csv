@@ -1,0 +1,32 @@
+﻿model_spec,description,variable,reference_group,term_count,wald_chi2,wald_df,wald_p_value,significance
+01_glm_profile_only,Research GLM: customer profile only,DIAG_AGE_GROUP,3. 41-50,4,1327.4144751990702,4,3.7865135810597014e-286,***
+01_glm_profile_only,Research GLM: customer profile only,DIAG_NAME_CONTRACT_TYPE,Cash loans,1,341.9662498207416,1,2.3804548712700004e-76,***
+01_glm_profile_only,Research GLM: customer profile only,DIAG_NAME_INCOME_TYPE,Working,4,337.7495313818295,4,7.740161072796851e-72,***
+01_glm_profile_only,Research GLM: customer profile only,DIAG_NAME_EDUCATION_TYPE,Secondary / secondary special,4,1122.6706313566174,4,9.229225606142077e-242,***
+02_glm_affordability_only,Research GLM: affordability only,DIAG_CREDIT_INCOME_GROUP,1. <=1x,4,314.7873852160474,4,6.990781005050508e-67,***
+02_glm_affordability_only,Research GLM: affordability only,DIAG_ANNUITY_INCOME_GROUP,1. <=10%,6,5049.144142394262,6,0.0,***
+03_glm_credit_history_only,Research GLM: credit history only,DIAG_BUREAU_DEBT_CREDIT_GROUP,No bureau debt,5,2115.5719582275497,5,0.0,***
+03_glm_credit_history_only,Research GLM: credit history only,DIAG_PREVIOUS_REFUSAL_GROUP,0% refusal,4,1677.5774982969467,4,0.0,***
+04_glm_payment_behavior_only,Research GLM: payment behavior only,DIAG_LATE_PAYMENT_GROUP,No late payment,4,1216.319193406375,4,4.6171515077564355e-262,***
+04_glm_payment_behavior_only,Research GLM: payment behavior only,DIAG_CC_UTILIZATION_GROUP,No credit card history,6,1429.6252577424266,6,9.319427860320356e-306,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_AGE_GROUP,3. 41-50,4,892.941112181106,4,5.637228271041213e-192,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_NAME_CONTRACT_TYPE,Cash loans,1,174.24254491939453,1,8.762285318197639e-40,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_NAME_INCOME_TYPE,Working,4,316.50605703394524,4,2.976258650352143e-67,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_NAME_EDUCATION_TYPE,Secondary / secondary special,4,949.8088866286547,4,2.686213929874383e-204,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_CREDIT_INCOME_GROUP,1. <=1x,4,175.50931416565058,4,6.86796096288424e-37,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_ANNUITY_INCOME_GROUP,1. <=10%,6,3902.936641158031,6,0.0,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_BUREAU_DEBT_CREDIT_GROUP,No bureau debt,5,1491.4528323152535,5,0.0,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_PREVIOUS_REFUSAL_GROUP,0% refusal,4,1069.214523975633,4,3.563383707724986e-230,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_LATE_PAYMENT_GROUP,No late payment,4,844.1020629962351,4,2.1476262177335094e-181,***
+05_glm_controlled_core,Research GLM: controlled core model,DIAG_CC_UTILIZATION_GROUP,No credit card history,6,868.8770354035471,6,2.007127755196462e-184,***
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_AGE_GROUP,3. 41-50,4,,4,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_NAME_CONTRACT_TYPE,Cash loans,1,,1,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_NAME_INCOME_TYPE,Working,4,,4,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_NAME_EDUCATION_TYPE,Secondary / secondary special,4,,4,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_CREDIT_INCOME_GROUP,1. <=1x,4,,4,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_ANNUITY_INCOME_GROUP,1. <=10%,6,,6,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_BUREAU_DEBT_CREDIT_GROUP,No bureau debt,5,,5,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_PREVIOUS_REFUSAL_GROUP,0% refusal,4,,4,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_LATE_PAYMENT_GROUP,No late payment,4,,4,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_CC_UTILIZATION_GROUP,No credit card history,6,,6,,
+06_glm_controlled_plus_underpayment_sensitivity,Research GLM: core plus underpayment sensitivity,DIAG_UNDERPAYMENT_GROUP,No underpayment,4,,4,,

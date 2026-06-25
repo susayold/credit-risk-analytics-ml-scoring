@@ -1,0 +1,19 @@
+﻿model_name,cal_roc_auc,cal_pr_auc
+LightGBM oskird-style,0.796485,0.286257
+LightGBM NoxMoon-style 1,0.794805,0.283738
+XGBoost - hist baseline,0.794528,0.280744
+LightGBM NoxMoon-style 3,0.794459,0.28463
+LightGBM NoxMoon-style 2,0.794292,0.284061
+CatBoost - GPU/CPU baseline,0.792558,0.277765
+LightGBM - balanced baseline,0.790813,0.278427
+Gradient Boosting Classifier - HistGB,0.789218,0.27698
+Logistic Regression - OHE baseline,0.780707,0.260259
+WOE Logistic Regression,0.776173,0.246824
+Logistic Scorecard Model,0.776173,0.246824
+Random Forest Classifier,0.768192,0.243555
+Support Vector Machine - LinearSVC calibrated,0.764674,0.240088
+Decision Tree Classifier,0.731909,0.199883
+K-Nearest Neighbors - compact SVD,0.713127,0.182464
+Neural Network - MLP compact,0.709311,0.18842
+Naive Bayes - Gaussian compact,0.64853,0.121824
+Dummy Baseline - prior probability,0.5,0.077477

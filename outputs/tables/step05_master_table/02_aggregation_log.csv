@@ -1,0 +1,8 @@
+source,input_rows,output_rows,output_unique_sk_id_curr,notes
+application_train/test,356255,356255,356255,Application base cleaned and ratio features created
+bureau,1716428,305811,305811,Bureau loans aggregated to SK_ID_CURR
+bureau_balance,27299925,134542,134542,Bureau monthly balance joined to bureau map and aggregated to SK_ID_CURR
+previous_application,1670214,338857,338857,Previous applications cleaned for 365243 date codes and aggregated to SK_ID_CURR
+POS_CASH_balance,10001358,337252,337252,POS/CASH monthly records aggregated; composite duplicate SK_ID_PREV+MONTHS_BALANCE count=0
+installments_payments,13605401,339587,339587,Installment payment behavior aggregated; composite duplicate SK_ID_PREV+NUM_INSTALMENT_NUMBER count=743407
+credit_card_balance,3840312,103558,103558,Credit card monthly behavior aggregated with safe utilization; composite duplicate SK_ID_PREV+MONTHS_BALANCE count=0

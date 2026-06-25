@@ -1,0 +1,8 @@
+﻿column,special_value,count,pct,default_rate_special,default_rate_others,diff_pp,note
+DAYS_EMPLOYED,=365243,55374,18.0072,5.4,8.66,-3.26,Sentinel for unemployed/unknown — must replace NaN + flag
+ORGANIZATION_TYPE,=XNA,55374,18.0072,5.4,8.66,-3.26,Matches DAYS_EMPLOYED anomaly group — likely not employed
+CODE_GENDER,=XNA,4,0.0013,0.0,8.07,-8.07,Unknown gender — only 4 rows
+NAME_FAMILY_STATUS,=Unknown,2,0.0007,0.0,8.07,-8.07,Only 2 rows — negligible impact
+AMT_INCOME_TOTAL,">p99 (472,500)",3014,0.9801,5.37,8.1,-2.73,Extreme high income outlier — valid but distorts mean
+AMT_INCOME_TOTAL,">p999 (900,000)",278,0.0904,5.4,8.08,-2.68,Very extreme income outlier
+AMT_INCOME_TOTAL,=0,0,0.0,,8.07,,Zero income — likely error

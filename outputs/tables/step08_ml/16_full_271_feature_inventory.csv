@@ -1,0 +1,2 @@
+total_columns_in_train,total_rows,target_default_rate,feature_columns_used,numeric_features,categorical_features,id_columns_excluded,target_excluded_from_features
+271,307511,0.08072881945686496,269,253,16,SK_ID_CURR,TARGET

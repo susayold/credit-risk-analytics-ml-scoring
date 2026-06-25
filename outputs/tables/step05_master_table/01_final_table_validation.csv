@@ -1,0 +1,8 @@
+check,value,expected,status
+initial_application_rows,356255,356255,pass
+final_rows,356255,356255,pass
+final_unique_SK_ID_CURR,356255,356255,pass
+train_rows,307511,307511,pass
+test_rows,48744,48744,pass
+target_non_missing_train,307511,307511,pass
+target_non_missing_test,0,0,pass

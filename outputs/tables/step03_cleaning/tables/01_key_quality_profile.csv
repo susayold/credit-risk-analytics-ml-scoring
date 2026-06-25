@@ -1,0 +1,15 @@
+file,key,rows,null_key_count,unique_values,duplicate_rows_vs_single_key,null_key_pct
+application_train.csv,SK_ID_CURR,307511,0,307511,0,0.0
+application_test.csv,SK_ID_CURR,48744,0,48744,0,0.0
+bureau.csv,SK_ID_CURR,1716428,0,305811,1410617,0.0
+bureau.csv,SK_ID_BUREAU,1716428,0,1716428,0,0.0
+bureau_balance.csv,SK_ID_BUREAU,27299925,0,817395,26482530,0.0
+previous_application.csv,SK_ID_CURR,1670214,0,338857,1331357,0.0
+previous_application.csv,SK_ID_PREV,1670214,0,1670214,0,0.0
+POS_CASH_balance.csv,SK_ID_CURR,10001358,0,337252,9664106,0.0
+POS_CASH_balance.csv,SK_ID_PREV,10001358,0,936325,9065033,0.0
+installments_payments.csv,SK_ID_CURR,13605401,0,339587,13265814,0.0
+installments_payments.csv,SK_ID_PREV,13605401,0,997752,12607649,0.0
+credit_card_balance.csv,SK_ID_CURR,3840312,0,103558,3736754,0.0
+credit_card_balance.csv,SK_ID_PREV,3840312,0,104307,3736005,0.0
+sample_submission.csv,SK_ID_CURR,48744,0,48744,0,0.0

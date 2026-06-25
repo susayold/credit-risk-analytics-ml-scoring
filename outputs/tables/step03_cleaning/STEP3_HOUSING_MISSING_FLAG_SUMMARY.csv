@@ -1,0 +1,7 @@
+﻿split,APP_PROPERTY_ANY_MISSING_FLAG,rows,pct_of_split,mean_missing_count,median_missing_count,default_rate
+full_train_plus_test,0,91485,25.6796,0.0,0.0,
+full_train_plus_test,1,264770,74.3204,13.8745,18.0,
+train_with_target,0,78599,25.5597,0.0,0.0,6.9645
+train_with_target,1,228912,74.4403,13.9039,18.0,8.4535
+test_without_target,0,12886,26.4361,0.0,0.0,
+test_without_target,1,35858,73.5639,13.687,18.0,

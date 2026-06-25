@@ -1,0 +1,10 @@
+﻿table,path,available
+application_train,/kaggle/input/datasets/rwrwrrwq/fullpjda/appli...,True
+application_test,/kaggle/input/datasets/rwrwrrwq/fullpjda/appli...,True
+bureau,/kaggle/input/datasets/rwrwrrwq/fullpjda/burea...,True
+bureau_balance,/kaggle/input/datasets/rwrwrrwq/fullpjda/burea...,True
+previous_application,/kaggle/input/datasets/rwrwrrwq/fullpjda/previ...,True
+installments_payments,/kaggle/input/datasets/rwrwrrwq/fullpjda/insta...,True
+credit_card_balance,/kaggle/input/datasets/rwrwrrwq/fullpjda/credi...,True
+POS_CASH_balance,/kaggle/input/datasets/rwrwrrwq/fullpjda/POS_C...,True
+columns_description,/kaggle/input/datasets/rwrwrrwq/fullpjda/HomeC...,True

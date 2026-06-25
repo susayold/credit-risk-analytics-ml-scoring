@@ -1,0 +1,3 @@
+﻿dataset,rows,columns,default_rate,duplicate_ids
+train,307511,271,0.080729,0
+test,48744,270,,0

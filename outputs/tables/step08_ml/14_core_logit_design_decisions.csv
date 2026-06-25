@@ -1,0 +1,6 @@
+decision,reason
+Use core model for odds-ratio interpretation,The wider M5 model is useful for block comparison but produced singular-Hessian warnings for p-values/CI.
+Drop exact duplicate dummy columns,No-history categories can be identical across related payment/bureau features and make the design matrix singular.
+Use binned categorical predictors,"Step 4 showed nonlinear risk patterns, so linear continuous terms would be misleading for diagnostic interpretation."
+Keep natural default prevalence,Diagnostic odds ratios should not be distorted by SMOTE or resampling.
+Keep bureau-balance features out of the main diagnostic OR model,Step 1-6 reconciliation found strong train/test covariate shift in bureau_balance coverage.

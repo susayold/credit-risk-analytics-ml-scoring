@@ -1,0 +1,4 @@
+﻿model,weight
+LightGBM OOF,0.9
+CatBoost OOF,0.05
+XGBoost OOF,0.05

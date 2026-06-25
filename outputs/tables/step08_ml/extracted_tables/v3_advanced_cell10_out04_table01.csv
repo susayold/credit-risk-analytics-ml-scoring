@@ -1,0 +1,4 @@
+﻿model_name,runtime_seconds,n,event_rate,roc_auc,gini,pr_auc,log_loss,brier_score,ks,...,lift_at_top_5pct,precision_at_top_10pct,recall_at_top_10pct,lift_at_top_10pct,precision_at_top_20pct,recall_at_top_20pct,lift_at_top_20pct,precision_at_top_30pct,recall_at_top_30pct,lift_at_top_30pct
+Weighted ensemble Isotonic calibrated,0.0,61504,0.093701,0.789695,0.579391,0.300026,0.261864,0.074414,0.435086,...,4.475671,0.34157,0.364567,3.645315,0.264044,0.563595,2.817931,0.215749,0.690786,2.30252
+Weighted ensemble Platt calibrated,0.0,61504,0.093701,0.7907,0.581401,0.312825,0.264992,0.075276,0.436287,...,4.510366,0.341408,0.364394,3.64358,0.26632,0.568454,2.842223,0.215586,0.690265,2.300785
+Weighted ensemble raw,0.0,61504,0.093701,0.7907,0.581401,0.312825,0.269783,0.07624,0.436287,...,4.510366,0.341408,0.364394,3.64358,0.26632,0.568454,2.842223,0.215586,0.690265,2.300785
