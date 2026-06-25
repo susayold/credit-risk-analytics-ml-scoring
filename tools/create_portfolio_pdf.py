@@ -19,7 +19,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed.pdf"
+OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v2.pdf"
 
 NAVY = colors.HexColor("#172052")
 PURPLE = colors.HexColor("#6D45F6")
@@ -371,26 +371,45 @@ def build():
     ]
     story += [simple_table(clean, [2.15 * inch, 4.95 * inch]), PageBreak()]
 
-    story += [section_band("5. Descriptive Analytics and Dashboard Insights"), Spacer(1, 10)]
+    story += [section_band("5. Dashboard Evidence: From Data to Risk Signals"), Spacer(1, 10)]
     story += [
         p(
-            "Before modeling, the project uses descriptive analytics to identify business-readable risk patterns. These insights are easier to explain to stakeholders than raw model coefficients.",
+            "This is the most important DA layer of the project: before presenting any model, the dashboard translates raw data into business-readable risk signals. "
+            "The five charts below show where default risk concentrates and how the credit team can convert analysis into review rules.",
             "body",
         ),
-        fit_image("outputs/figures/step06_dashboard/11_default_rate_by_credit_card_utilization.png", 6.7 * inch, 2.8 * inch),
+        p("<b>1) Credit / Income Ratio:</b> risk is highest around the 2x-4x range, showing that raw loan amount alone is not enough; debt must be read relative to income.", "body"),
+        fit_image("outputs/figures/step06_dashboard/04_default_rate_by_credit_income_ratio.png", 6.85 * inch, 1.75 * inch),
+        Spacer(1, 5),
+        p("<b>2) Annuity / Income Ratio:</b> monthly repayment burden rises above baseline around the 20%-60% bands, which supports using affordability ratios instead of only raw income.", "body"),
+        fit_image("outputs/figures/step06_dashboard/05_default_rate_by_annuity_income_ratio.png", 6.85 * inch, 1.75 * inch),
+        Spacer(1, 5),
+        p("<b>3) Previous Refusal Rate:</b> applicants with repeated past refusals show a clear default-rate gradient, making previous refusal history a practical review trigger.", "body"),
+        fit_image("outputs/figures/step06_dashboard/08_default_rate_by_previous_refusal_rate.png", 6.85 * inch, 1.75 * inch),
+        PageBreak(),
+    ]
+    story += [
+        section_band("5. Dashboard Evidence Continued"),
+        Spacer(1, 10),
+        p("<b>4) Installment Late Payment Rate:</b> repayment behavior is one of the cleanest operational signals. Higher late-payment rate maps directly to higher observed default rate.", "body"),
+        fit_image("outputs/figures/step06_dashboard/09_default_rate_by_late_payment_rate.png", 6.85 * inch, 1.85 * inch),
+        Spacer(1, 6),
+        p("<b>5) Credit Card Utilization:</b> the strongest dashboard signal is card utilization above 100%, where default rate reaches 25.5%, about 3.16x the 8.07% portfolio baseline.", "body"),
+        fit_image("outputs/figures/step06_dashboard/11_default_rate_by_credit_card_utilization.png", 6.85 * inch, 1.85 * inch),
         Spacer(1, 8),
     ]
     insight_table = [
-        ["Finding", "Business interpretation"],
-        ["Credit card utilization >100%: 25.5% default rate", "Strong stress signal; customers using beyond the limit should be reviewed more tightly."],
-        ["3.16x risk versus 8.07% baseline", "The segment is not just slightly risky; it is several times riskier than the portfolio average."],
-        ["Payment behavior matters", "Late payment, underpayment, POS DPD, and previous refusal patterns are consistent risk signals."],
-        ["External score variables are powerful but black-box", "EXT_SOURCE fields help prediction, but governance is needed because their upstream logic is not transparent."],
+        ["Dashboard signal", "Senior DA interpretation"],
+        ["Affordability burden", "Credit/income and annuity/income show why ratios are more decision-useful than raw money fields. A customer is risky not only because the loan is large, but because the obligation is large relative to repayment capacity."],
+        ["Behavioral repayment stress", "Late payment and previous refusal provide evidence of realized friction, not just demographic/profile risk. These signals should receive high attention in manual review."],
+        ["Credit line stress", "Credit card utilization above 100% is a direct operational warning. It indicates potential liquidity pressure and should feed stricter review rules."],
+        ["Dashboard-to-model link", "These dashboard signals align with diagnostic and ML results, so the model is not a black box detached from the business story."],
     ]
-    story += [simple_table(insight_table, [2.35 * inch, 4.75 * inch]), Spacer(1, 8)]
     story += [
+        simple_table(insight_table, [2.0 * inch, 5.1 * inch]),
+        Spacer(1, 8),
         callout(
-            "<b>Dashboard role:</b> Power BI converts the model and descriptive outputs into monitoring views by borrower profile, credit burden, bureau history, repayment behavior, and card utilization.",
+            "<b>Dashboard role:</b> Power BI converts the analytical master table into a decision layer: which customer groups are risky, why they are risky, and which rules should guide review priority.",
             BLUE,
         ),
         PageBreak(),
@@ -451,15 +470,16 @@ def build():
     story += [section_band("8. Turning Scores into Business Action"), Spacer(1, 10)]
     story += [
         p(
-            "The most useful business output is the three-way decision framework. Instead of asking the model to make a yes/no decision, the score is translated into operational review bands.",
+            "The most useful output is not the score itself, but the decision system built around the score. "
+            "A senior DA view is to avoid treating ML as an automatic approval/rejection machine. The model should help the business decide where to spend review capacity, what evidence to check, and which risk conditions deserve stricter policy control.",
             "body",
         )
     ]
     band = [
         ["Band", "Operational use", "Observed validation risk"],
-        ["Green / auto-approve candidate", "Low-risk applications can be processed faster subject to policy rules.", "About 4.27% default rate"],
-        ["Amber / manual review", "Middle-risk applications should receive normal analyst review.", "About 15.92% default rate"],
-        ["Red / strict review or reject candidate", "Highest-risk applications need stronger controls, document checks, or conservative policy treatment.", "About 32.50% default rate"],
+        ["Green / fast-track candidate", "Low-risk applications can be processed faster if they also pass hard policy rules. The goal is shorter turnaround time, not blind approval.", "About 4.27% default rate"],
+        ["Amber / manual review", "Middle-risk applications should receive standard analyst review, with attention to affordability ratios and recent repayment behavior.", "About 15.92% default rate"],
+        ["Red / strict review or reject candidate", "Highest-risk applications need stronger controls: document verification, affordability review, bureau/payment-history checks, lower limit, or policy rejection if multiple red flags align.", "About 32.50% default rate"],
     ]
     story += [simple_table(band, [1.6 * inch, 3.55 * inch, 1.95 * inch]), Spacer(1, 10)]
     story += [
@@ -468,6 +488,57 @@ def build():
         callout(
             "<b>Business impact:</b> reviewing the top 29.6% highest-risk applications captures about 67.9% of default cases, improving targeting efficiency by about 2.27x versus random review.",
             GREEN,
+        ),
+        PageBreak(),
+    ]
+
+    story += [section_band("8. Senior DA Decision Conclusion"), Spacer(1, 10)]
+    story += [
+        p(
+            "The analytical conclusion is that default risk is not random across the portfolio. It concentrates in measurable and explainable groups: customers with high repayment burden, weak historical application outcomes, late payment behavior, and credit line stress. "
+            "Therefore, the business should not allocate review effort evenly across all applications. Review should be risk-weighted.",
+            "body",
+        ),
+        p(
+            "The dashboard gives the business rule candidates, while the ML score ranks customers across many signals at once. The best operating design is to combine both: use dashboard-derived rules to explain why a case is risky, and use the model score to prioritize which cases should be reviewed first.",
+            "body",
+        ),
+    ]
+    decision_actions = [
+        ["Decision question", "Recommended action from the analysis"],
+        ["Which cases can move faster?", "Applications in the green score band, with no hard policy breaches and no severe dashboard red flags, can be routed to faster processing. This improves operational efficiency without claiming that the model alone approves the customer."],
+        ["Which cases need standard review?", "Amber-band cases should receive normal analyst review. Analysts should focus on affordability ratios, previous refusals, and payment-history behavior because these signals repeatedly appear in dashboard, diagnostic, and ML layers."],
+        ["Which cases need strict control?", "Red-band cases should receive enhanced verification. A customer is especially high priority if several red flags align: credit card utilization above 100%, high previous refusal rate, high late-payment rate, and elevated repayment burden."],
+        ["What is the measurable business value?", "Instead of randomly reviewing applications, reviewing the top 29.6% highest-risk group captures about 67.9% of default cases. This means review resources are concentrated where risk is most likely to appear."],
+        ["What should not be automated?", "The score should not become an automatic rejection rule. Credit decisions require policy, compliance, explainability, and human judgment, especially because external-source features are predictive but black-box."],
+    ]
+    story += [simple_table(decision_actions, [1.95 * inch, 5.15 * inch]), Spacer(1, 8)]
+    story += [
+        callout(
+            "<b>Senior DA conclusion:</b> the model creates value by changing the review process. It converts a broad portfolio into prioritized action: fast-track low-risk files, review medium-risk files with clear evidence, and apply strict controls to concentrated high-risk files.",
+            GREEN,
+        ),
+        PageBreak(),
+    ]
+
+    story += [section_band("8. Decision Value: Policy and Monitoring Design"), Spacer(1, 10)]
+    policy = [
+        ["Area", "How the project should be used in practice"],
+        ["Credit policy", "Use dashboard thresholds as policy discussion inputs: card utilization above 100%, high refusal history, and high late-payment rate should trigger stricter review rather than simple score-only decisions."],
+        ["Operations", "Use the risk score to queue applications. Analysts should start with the highest-risk cases because the top review group captures a disproportionate share of defaults."],
+        ["Portfolio monitoring", "Track default rate by risk band over time. If green-band risk rises or red-band capture falls, investigate data drift, policy changes, or model decay."],
+        ["Customer treatment", "Avoid a one-size-fits-all rejection logic. Some high-risk cases may need lower exposure, more documents, or pricing/limit adjustment rather than outright rejection."],
+        ["Governance", "Monitor sensitive/proxy variables and black-box external scores. A model can have good AUC and still require fairness, compliance, and business review before deployment."],
+    ]
+    story += [simple_table(policy, [1.55 * inch, 5.55 * inch]), Spacer(1, 10)]
+    story += [
+        p(
+            "<b>Final interpretation:</b> the strongest value of this project is not simply building a predictive model. The value is turning fragmented credit history into a master analytical table, converting that table into dashboard insights, validating the signals with diagnostic modeling, and finally translating the ML score into a controlled business workflow.",
+            "body",
+        ),
+        p(
+            "For a DA role, this demonstrates the full chain from data preparation to decision support: clean data, define risk signals, quantify lift, communicate trade-offs, and propose a process that a credit team can actually use.",
+            "body",
         ),
         PageBreak(),
     ]
