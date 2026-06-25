@@ -19,7 +19,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v2.pdf"
+OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v3.pdf"
 
 NAVY = colors.HexColor("#172052")
 PURPLE = colors.HexColor("#6D45F6")
@@ -371,35 +371,129 @@ def build():
     ]
     story += [simple_table(clean, [2.15 * inch, 4.95 * inch]), PageBreak()]
 
-    story += [section_band("5. Dashboard Evidence: From Data to Risk Signals"), Spacer(1, 10)]
+    story += [section_band("5. Dashboard Evidence: Five Core Risk Signals"), Spacer(1, 10)]
     story += [
         p(
-            "This is the most important DA layer of the project: before presenting any model, the dashboard translates raw data into business-readable risk signals. "
-            "The five charts below show where default risk concentrates and how the credit team can convert analysis into review rules.",
+            "This is the main DA evidence layer of the project. The dashboard translates the 271-feature master table into business-readable risk signals. "
+            "Each dashboard below includes the enlarged chart and the supporting data table used to read the decision implication.",
             "body",
         ),
-        p("<b>1) Credit / Income Ratio:</b> risk is highest around the 2x-4x range, showing that raw loan amount alone is not enough; debt must be read relative to income.", "body"),
-        fit_image("outputs/figures/step06_dashboard/04_default_rate_by_credit_income_ratio.png", 6.85 * inch, 1.75 * inch),
-        Spacer(1, 5),
-        p("<b>2) Annuity / Income Ratio:</b> monthly repayment burden rises above baseline around the 20%-60% bands, which supports using affordability ratios instead of only raw income.", "body"),
-        fit_image("outputs/figures/step06_dashboard/05_default_rate_by_annuity_income_ratio.png", 6.85 * inch, 1.75 * inch),
-        Spacer(1, 5),
-        p("<b>3) Previous Refusal Rate:</b> applicants with repeated past refusals show a clear default-rate gradient, making previous refusal history a practical review trigger.", "body"),
-        fit_image("outputs/figures/step06_dashboard/08_default_rate_by_previous_refusal_rate.png", 6.85 * inch, 1.75 * inch),
+        callout(
+            "<b>How to read these dashboards:</b> the red dashed line is the portfolio baseline around 8.07%. A segment above that line has higher-than-average observed default risk and should receive more attention in review or monitoring.",
+            BLUE,
+        ),
         PageBreak(),
     ]
+
     story += [
-        section_band("5. Dashboard Evidence Continued"),
-        Spacer(1, 10),
-        p("<b>4) Installment Late Payment Rate:</b> repayment behavior is one of the cleanest operational signals. Higher late-payment rate maps directly to higher observed default rate.", "body"),
-        fit_image("outputs/figures/step06_dashboard/09_default_rate_by_late_payment_rate.png", 6.85 * inch, 1.85 * inch),
-        Spacer(1, 6),
-        p("<b>5) Credit Card Utilization:</b> the strongest dashboard signal is card utilization above 100%, where default rate reaches 25.5%, about 3.16x the 8.07% portfolio baseline.", "body"),
-        fit_image("outputs/figures/step06_dashboard/11_default_rate_by_credit_card_utilization.png", 6.85 * inch, 1.85 * inch),
+        section_band("5.1 Dashboard Signal: Credit / Income Ratio"),
         Spacer(1, 8),
+        p("<b>Decision meaning:</b> loan size must be evaluated relative to customer income. The 2x-4x credit/income band has the highest observed default rate in this view, so affordability should be reviewed with ratios, not raw loan amount alone.", "body"),
+        fit_image("outputs/figures/step06_dashboard/04_default_rate_by_credit_income_ratio.png", 7.05 * inch, 3.0 * inch),
+        Spacer(1, 6),
+        simple_table(
+            [
+                ["Segment", "Default rate", "N applications", "Reading"],
+                ["<=1", "6.4%", "16,174", "Below baseline; lower observed risk."],
+                ["1-2", "7.7%", "60,164", "Near baseline; normal monitoring."],
+                ["2-4", "8.9%", "113,561", "Highest band here; affordability pressure appears."],
+                ["4-6", "8.1%", "62,887", "Around baseline; still needs ratio context."],
+                ["6-10", "7.3%", "44,881", "Below baseline in this sample."],
+                ["10+", "6.8%", "9,844", "Lower observed rate; possible selection/approval effect."],
+            ],
+            [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
+        ),
+        PageBreak(),
     ]
+
+    story += [
+        section_band("5.2 Dashboard Signal: Annuity / Income Ratio"),
+        Spacer(1, 8),
+        p("<b>Decision meaning:</b> annuity/income measures monthly repayment burden. It is more operational than income alone because it asks whether the customer can carry the monthly payment after approval.", "body"),
+        fit_image("outputs/figures/step06_dashboard/05_default_rate_by_annuity_income_ratio.png", 7.05 * inch, 3.0 * inch),
+        Spacer(1, 6),
+        simple_table(
+            [
+                ["Segment", "Default rate", "N applications", "Reading"],
+                ["<=10%", "7.2%", "57,210", "Lower burden; below baseline."],
+                ["10-20%", "8.1%", "145,231", "Around baseline; standard review."],
+                ["20-30%", "8.8%", "73,742", "Highest observed rate; repayment pressure starts to show."],
+                ["30-40%", "8.1%", "23,407", "Around baseline; check with other signals."],
+                ["40-60%", "8.3%", "6,990", "Slightly above baseline; small segment."],
+                ["60%+", "8.2%", "919", "Small group; do not over-read alone."],
+            ],
+            [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
+        ),
+        PageBreak(),
+    ]
+
+    story += [
+        section_band("5.3 Dashboard Signal: Previous Refusal Rate"),
+        Spacer(1, 8),
+        p("<b>Decision meaning:</b> previous refusal is a strong historical signal. As refusal rate rises, default rate rises from 7.1% to 17.8%, so repeated refusal history should trigger deeper document and affordability checks.", "body"),
+        fit_image("outputs/figures/step06_dashboard/08_default_rate_by_previous_refusal_rate.png", 7.05 * inch, 3.0 * inch),
+        Spacer(1, 6),
+        simple_table(
+            [
+                ["Segment", "Default rate", "N applications", "Reading"],
+                ["0", "7.1%", "190,763", "Lower than baseline; no prior refusal signal."],
+                ["0-25%", "8.1%", "47,397", "Around baseline."],
+                ["25-50%", "11.3%", "41,739", "Clear risk increase; review priority rises."],
+                ["50-75%", "15.6%", "9,393", "High-risk history; strict review candidate."],
+                ["75-100%", "17.8%", "1,765", "Very high risk; strong negative historical signal."],
+                ["Missing", "6.0%", "16,454", "Missing history is not necessarily high risk here."],
+            ],
+            [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
+        ),
+        PageBreak(),
+    ]
+
+    story += [
+        section_band("5.4 Dashboard Signal: Installment Late Payment Rate"),
+        Spacer(1, 8),
+        p("<b>Decision meaning:</b> late payment is a direct behavioral signal. The pattern is monotonic enough for business use: customers with 50%+ late payment rate show 16.4% default, roughly double the portfolio baseline.", "body"),
+        fit_image("outputs/figures/step06_dashboard/09_default_rate_by_late_payment_rate.png", 7.05 * inch, 3.0 * inch),
+        Spacer(1, 6),
+        simple_table(
+            [
+                ["Segment", "Default rate", "N applications", "Reading"],
+                ["No history", "6.0%", "15,868", "No installment record; lower observed risk."],
+                ["0", "6.8%", "136,644", "No late payment; lower risk."],
+                ["0-5%", "7.0%", "40,212", "Minor lateness; below baseline."],
+                ["5-20%", "9.4%", "77,325", "Above baseline; review repayment behavior."],
+                ["20-50%", "11.7%", "35,218", "Material late-payment risk."],
+                ["50%+", "16.4%", "2,244", "Very high repayment stress; strict review signal."],
+            ],
+            [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
+        ),
+        PageBreak(),
+    ]
+
+    story += [
+        section_band("5.5 Dashboard Signal: Credit Card Utilization"),
+        Spacer(1, 8),
+        p("<b>Decision meaning:</b> this is the clearest dashboard warning. Customers using more than 100% of their card limit show a 25.5% default rate, about 3.16x the 8.07% baseline.", "body"),
+        fit_image("outputs/figures/step06_dashboard/11_default_rate_by_credit_card_utilization.png", 7.05 * inch, 3.0 * inch),
+        Spacer(1, 6),
+        simple_table(
+            [
+                ["Segment", "Default rate", "N applications", "Reading"],
+                ["No card history", "7.8%", "220,606", "Near baseline; no card behavior signal."],
+                ["<=0", "5.4%", "26,605", "Lowest observed risk in this view."],
+                ["0-30%", "6.4%", "19,529", "Low utilization; below baseline."],
+                ["30-70%", "9.5%", "24,183", "Above baseline; monitor utilization."],
+                ["70-100%", "14.9%", "14,715", "High utilization; strict review candidate."],
+                ["100%+", "25.5%", "1,004", "Severe credit line stress; strongest dashboard risk signal."],
+                ["Missing", "11.9%", "869", "Small group but above baseline; verify data quality/history."],
+            ],
+            [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
+        ),
+        PageBreak(),
+    ]
+
+    story += [section_band("5.6 Dashboard Conclusion"), Spacer(1, 10)]
     insight_table = [
-        ["Dashboard signal", "Senior DA interpretation"],
+        ["Dashboard signal", "Business interpretation"],
         ["Affordability burden", "Credit/income and annuity/income show why ratios are more decision-useful than raw money fields. A customer is risky not only because the loan is large, but because the obligation is large relative to repayment capacity."],
         ["Behavioral repayment stress", "Late payment and previous refusal provide evidence of realized friction, not just demographic/profile risk. These signals should receive high attention in manual review."],
         ["Credit line stress", "Credit card utilization above 100% is a direct operational warning. It indicates potential liquidity pressure and should feed stricter review rules."],
@@ -409,7 +503,7 @@ def build():
         simple_table(insight_table, [2.0 * inch, 5.1 * inch]),
         Spacer(1, 8),
         callout(
-            "<b>Dashboard role:</b> Power BI converts the analytical master table into a decision layer: which customer groups are risky, why they are risky, and which rules should guide review priority.",
+            "<b>Dashboard conclusion:</b> the dashboard turns the master table into a decision layer: which customer groups are risky, why they are risky, and which evidence should guide review priority.",
             BLUE,
         ),
         PageBreak(),
@@ -471,7 +565,7 @@ def build():
     story += [
         p(
             "The most useful output is not the score itself, but the decision system built around the score. "
-            "A senior DA view is to avoid treating ML as an automatic approval/rejection machine. The model should help the business decide where to spend review capacity, what evidence to check, and which risk conditions deserve stricter policy control.",
+            "A practical analytics view is to avoid treating ML as an automatic approval/rejection machine. The model should help the business decide where to spend review capacity, what evidence to check, and which risk conditions deserve stricter policy control.",
             "body",
         )
     ]
@@ -492,7 +586,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("8. Senior DA Decision Conclusion"), Spacer(1, 10)]
+    story += [section_band("8. Decision Recommendation and Business Conclusion"), Spacer(1, 10)]
     story += [
         p(
             "The analytical conclusion is that default risk is not random across the portfolio. It concentrates in measurable and explainable groups: customers with high repayment burden, weak historical application outcomes, late payment behavior, and credit line stress. "
@@ -515,7 +609,7 @@ def build():
     story += [simple_table(decision_actions, [1.95 * inch, 5.15 * inch]), Spacer(1, 8)]
     story += [
         callout(
-            "<b>Senior DA conclusion:</b> the model creates value by changing the review process. It converts a broad portfolio into prioritized action: fast-track low-risk files, review medium-risk files with clear evidence, and apply strict controls to concentrated high-risk files.",
+            "<b>Decision conclusion:</b> the model creates value by changing the review process. It converts a broad portfolio into prioritized action: fast-track low-risk files, review medium-risk files with clear evidence, and apply strict controls to concentrated high-risk files.",
             GREEN,
         ),
         PageBreak(),
