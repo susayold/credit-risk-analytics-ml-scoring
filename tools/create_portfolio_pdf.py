@@ -19,7 +19,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v4.pdf"
+OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v5.pdf"
 
 NAVY = colors.HexColor("#172052")
 PURPLE = colors.HexColor("#6D45F6")
@@ -279,6 +279,54 @@ def add_front_page(story, repo_url):
     story += [Spacer(1, 6), simple_table(deliverables, [1.55 * inch, 5.55 * inch]), PageBreak()]
 
 
+def add_dashboard_export_pages(story):
+    dashboard_pages = [
+        (
+            "2. Power BI Dashboard Export - Overview",
+            "Portfolio-level view: customer count, default rate, default customers, average credit amount, late payment share, target distribution, and a risk heatmap.",
+            "reports/portfolio_assets/dashboard_page_01.png",
+        ),
+        (
+            "2. Power BI Dashboard Export - Customer Profile",
+            "Customer-profile view: age, education, income type, occupation, and demographic/profile segments connected to default rate.",
+            "reports/portfolio_assets/dashboard_page_02.png",
+        ),
+        (
+            "2. Power BI Dashboard Export - Loan and Affordability",
+            "Affordability view: credit amount, annuity, credit/income ratio, annuity/income ratio, contract type, and burden heatmap.",
+            "reports/portfolio_assets/dashboard_page_03.png",
+        ),
+        (
+            "2. Power BI Dashboard Export - Credit History",
+            "Credit-history view: bureau loans, overdue share, previous refusal share, active loans, debt/credit pressure, and refusal/bureau risk heatmaps.",
+            "reports/portfolio_assets/dashboard_page_04.png",
+        ),
+        (
+            "2. Power BI Dashboard Export - Payment Behavior",
+            "Payment-behavior view: late payment, underpayment, credit card utilization, POS DPD, and repayment behavior risk heatmaps.",
+            "reports/portfolio_assets/dashboard_page_05.png",
+        ),
+        (
+            "2. Power BI Dashboard Export - Risk Segmentation",
+            "Risk-segmentation view: risk score groups, high-risk share, very-high-risk share, default rate by segment, and action recommendation summary.",
+            "reports/portfolio_assets/dashboard_page_06.png",
+        ),
+    ]
+    for title, note, image_path in dashboard_pages:
+        story += [
+            section_band(title),
+            Spacer(1, 8),
+            p(note, "body"),
+            fit_image(image_path, 7.15 * inch, 4.35 * inch),
+            Spacer(1, 8),
+            callout(
+                "<b>Dashboard evidence:</b> this page is inserted directly from the Power BI dashboard export. It is not only a written description; it shows the actual dashboard view used for the analysis.",
+                BLUE,
+            ),
+            PageBreak(),
+        ]
+
+
 def build():
     doc = SimpleDocTemplate(
         str(OUT),
@@ -295,8 +343,9 @@ def build():
     repo_url = "https://github.com/susayold/credit-risk-analytics-ml-scoring"
 
     add_front_page(story, repo_url)
+    add_dashboard_export_pages(story)
 
-    story += [section_band("2. Business Problem and Decision Target"), Spacer(1, 10)]
+    story += [section_band("3. Business Problem and Decision Target"), Spacer(1, 10)]
     story += [
         p(
             "In credit approval, the business risk is two-sided: approving a truly high-risk customer increases credit loss, while rejecting or delaying a good customer hurts revenue and customer experience. The project therefore focuses on ranking risk and allocating review effort, not replacing credit policy.",
@@ -319,7 +368,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("3. Data Architecture and Feature Flow"), Spacer(1, 10)]
+    story += [section_band("4. Data Architecture and Feature Flow"), Spacer(1, 10)]
     flow = [
         ["Stage", "Main work", "Evidence in repository"],
         ["Data understanding", "Profile application and historical credit tables; define grain and target.", "src/step02_data_understanding.py"],
@@ -343,7 +392,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("4. SQL ETL and Cleaning Logic"), Spacer(1, 10)]
+    story += [section_band("5. SQL ETL and Cleaning Logic"), Spacer(1, 10)]
     story += [
         p(
             "The original project was executed mainly with Python/pandas. I added a SQL ETL version to document how the data engineering layer can be implemented with SQL for interview and production-style explanation.",
@@ -371,7 +420,7 @@ def build():
     ]
     story += [simple_table(clean, [2.15 * inch, 4.95 * inch]), PageBreak()]
 
-    story += [section_band("5. Dashboard Evidence: Five Core Risk Signals"), Spacer(1, 10)]
+    story += [section_band("6. Dashboard Evidence: Five Core Risk Signals"), Spacer(1, 10)]
     story += [
         p(
             "This is the main DA evidence layer of the project. The actual interactive Power BI dashboard is included as <b>dashboard/dashboard.pbix</b>. "
@@ -386,7 +435,7 @@ def build():
     ]
 
     story += [
-        section_band("5.1 Dashboard Signal: Credit / Income Ratio"),
+        section_band("6.1 Dashboard Signal: Credit / Income Ratio"),
         Spacer(1, 8),
         p("<b>Decision meaning:</b> loan size must be evaluated relative to customer income. The 2x-4x credit/income band has the highest observed default rate in this view, so affordability should be reviewed with ratios, not raw loan amount alone.", "body"),
         fit_image("outputs/figures/step06_dashboard/04_default_rate_by_credit_income_ratio.png", 7.05 * inch, 3.0 * inch),
@@ -407,7 +456,7 @@ def build():
     ]
 
     story += [
-        section_band("5.2 Dashboard Signal: Annuity / Income Ratio"),
+        section_band("6.2 Dashboard Signal: Annuity / Income Ratio"),
         Spacer(1, 8),
         p("<b>Decision meaning:</b> annuity/income measures monthly repayment burden. It is more operational than income alone because it asks whether the customer can carry the monthly payment after approval.", "body"),
         fit_image("outputs/figures/step06_dashboard/05_default_rate_by_annuity_income_ratio.png", 7.05 * inch, 3.0 * inch),
@@ -428,7 +477,7 @@ def build():
     ]
 
     story += [
-        section_band("5.3 Dashboard Signal: Previous Refusal Rate"),
+        section_band("6.3 Dashboard Signal: Previous Refusal Rate"),
         Spacer(1, 8),
         p("<b>Decision meaning:</b> previous refusal is a strong historical signal. As refusal rate rises, default rate rises from 7.1% to 17.8%, so repeated refusal history should trigger deeper document and affordability checks.", "body"),
         fit_image("outputs/figures/step06_dashboard/08_default_rate_by_previous_refusal_rate.png", 7.05 * inch, 3.0 * inch),
@@ -449,7 +498,7 @@ def build():
     ]
 
     story += [
-        section_band("5.4 Dashboard Signal: Installment Late Payment Rate"),
+        section_band("6.4 Dashboard Signal: Installment Late Payment Rate"),
         Spacer(1, 8),
         p("<b>Decision meaning:</b> late payment is a direct behavioral signal. The pattern is monotonic enough for business use: customers with 50%+ late payment rate show 16.4% default, roughly double the portfolio baseline.", "body"),
         fit_image("outputs/figures/step06_dashboard/09_default_rate_by_late_payment_rate.png", 7.05 * inch, 3.0 * inch),
@@ -470,7 +519,7 @@ def build():
     ]
 
     story += [
-        section_band("5.5 Dashboard Signal: Credit Card Utilization"),
+        section_band("6.5 Dashboard Signal: Credit Card Utilization"),
         Spacer(1, 8),
         p("<b>Decision meaning:</b> this is the clearest dashboard warning. Customers using more than 100% of their card limit show a 25.5% default rate, about 3.16x the 8.07% baseline.", "body"),
         fit_image("outputs/figures/step06_dashboard/11_default_rate_by_credit_card_utilization.png", 7.05 * inch, 3.0 * inch),
@@ -491,7 +540,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("5.6 Dashboard Conclusion"), Spacer(1, 10)]
+    story += [section_band("6.6 Dashboard Conclusion"), Spacer(1, 10)]
     insight_table = [
         ["Dashboard signal", "Business interpretation"],
         ["Affordability burden", "Credit/income and annuity/income show why ratios are more decision-useful than raw money fields. A customer is risky not only because the loan is large, but because the obligation is large relative to repayment capacity."],
@@ -509,7 +558,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("6. Diagnostic Analytics: Explainable Logistic Regression"), Spacer(1, 10)]
+    story += [section_band("7. Diagnostic Analytics: Explainable Logistic Regression"), Spacer(1, 10)]
     story += [
         p(
             "The diagnostic layer uses Logistic Regression to explain risk drivers in a controlled and business-readable way. It is not the final champion ML model; it is an interpretation layer that helps connect dashboard insight to model evidence.",
@@ -531,7 +580,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("7. ML Benchmarking and Champion Model"), Spacer(1, 10)]
+    story += [section_band("8. ML Benchmarking and Champion Model"), Spacer(1, 10)]
     story += [
         p(
             "The ML layer focuses on ranking customers by default risk. Because TARGET=1 is only around 8-9% of observations, the project uses ROC-AUC, PR-AUC, Lift, and capture rate instead of relying on accuracy.",
@@ -561,7 +610,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("8. Turning Scores into Business Action"), Spacer(1, 10)]
+    story += [section_band("9. Turning Scores into Business Action"), Spacer(1, 10)]
     story += [
         p(
             "The most useful output is not the score itself, but the decision system built around the score. "
@@ -586,7 +635,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("8. Decision Recommendation and Business Conclusion"), Spacer(1, 10)]
+    story += [section_band("10. Decision Recommendation and Business Conclusion"), Spacer(1, 10)]
     story += [
         p(
             "The analytical conclusion is that default risk is not random across the portfolio. It concentrates in measurable and explainable groups: customers with high repayment burden, weak historical application outcomes, late payment behavior, and credit line stress. "
@@ -615,7 +664,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("8. Decision Value: Policy and Monitoring Design"), Spacer(1, 10)]
+    story += [section_band("11. Decision Value: Policy and Monitoring Design"), Spacer(1, 10)]
     policy = [
         ["Area", "How the project should be used in practice"],
         ["Credit policy", "Use dashboard thresholds as policy discussion inputs: card utilization above 100%, high refusal history, and high late-payment rate should trigger stricter review rather than simple score-only decisions."],
@@ -637,7 +686,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("9. Explainability and Governance"), Spacer(1, 10)]
+    story += [section_band("12. Explainability and Governance"), Spacer(1, 10)]
     story += [
         p(
             "SHAP was used to explain which features drove model output. This is important because a high-performing credit model still needs transparency, monitoring, and governance before it can support decisions.",
@@ -655,14 +704,15 @@ def build():
     ]
     story += [simple_table(gov, [1.8 * inch, 5.3 * inch]), PageBreak()]
 
-    story += [section_band("10. Evidence, Reproducibility, and Interview Talking Points"), Spacer(1, 10)]
+    story += [section_band("13. Evidence, Reproducibility, and Interview Talking Points"), Spacer(1, 10)]
     evidence = [
         ["Repository artifact", "What it proves"],
         ["README.md", "Project overview, results, run instructions, and repo structure."],
         ["sql/", "SQL ETL implementation for cleaning, feature engineering, historical aggregation, and master table."],
         ["src/", "Python scripts for data understanding, cleaning, descriptive analytics, master build, and diagnostic analytics."],
         ["notebooks/step08_machine_learning_governance.ipynb", "ML benchmarking, scoring, risk bands, SHAP, and governance checks."],
-        ["dashboard/dashboard.pbix", "Main Power BI dashboard file for portfolio and segment monitoring. The dashboard images in this PDF are report snapshots, not a replacement for the PBIX file."],
+        ["dashboard/dashboard.pbix", "Main interactive Power BI dashboard file for portfolio and segment monitoring."],
+        ["dashboard/dashboard.pdf", "Power BI dashboard export inserted directly into this portfolio PDF as dashboard pages."],
         ["data/processed/final_customer_analysis_train.csv.gz", "Final labeled customer-level processed data used for analytics/modeling evidence."],
         ["outputs/tables/ and outputs/figures/", "Result tables and charts supporting the presentation and portfolio PDF."],
     ]

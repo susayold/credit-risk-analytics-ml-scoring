@@ -90,7 +90,10 @@ Power BI dashboard:
 
 ```text
 dashboard/dashboard.pbix
+dashboard/dashboard.pdf
 ```
+
+`dashboard.pbix` is the editable Power BI file. `dashboard.pdf` is the exported dashboard view used as direct visual evidence in the portfolio PDF.
 
 This file is larger than normal GitHub file limits and should be tracked using Git LFS.
 

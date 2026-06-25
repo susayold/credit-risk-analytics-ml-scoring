@@ -37,6 +37,7 @@ Credit Risk Analytics & ML Scoring Pipeline
 
 - `data/processed/final_customer_analysis_train.csv.gz`
 - `dashboard/dashboard.pbix`
+- `dashboard/dashboard.pdf`
 - `reports/credit_risk_final_presentation.pptx`
 - `reports/credit_risk_full_report.pdf`
 - `sql/`
