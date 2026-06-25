@@ -19,7 +19,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v6.pdf"
+OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v7.pdf"
 
 NAVY = colors.HexColor("#172052")
 PURPLE = colors.HexColor("#6D45F6")
@@ -215,6 +215,10 @@ def callout(text, color=NAVY):
     return t
 
 
+def conclusion(text, color=PURPLE):
+    return callout(f"<b>Conclusion:</b> {text}", color)
+
+
 def fit_image(relative_path, max_w, max_h):
     path = ROOT / relative_path
     with PILImage.open(path) as im:
@@ -275,7 +279,17 @@ def add_front_page(story, repo_url):
         ["Analytics and dashboarding", "Produced descriptive statistics, correlation/quantile analysis, risk segments, and Power BI-ready default-rate insights."],
         ["Modeling and governance", "Built diagnostic Logistic Regression and ML prioritization model; added SHAP, sensitivity, and fairness/proxy checks."],
     ]
-    story += [Spacer(1, 6), simple_table(deliverables, [1.55 * inch, 5.55 * inch]), PageBreak()]
+    story += [
+        Spacer(1, 6),
+        simple_table(deliverables, [1.55 * inch, 5.55 * inch]),
+        Spacer(1, 8),
+        conclusion(
+            "The project is designed as a decision-support workflow, not only a modeling exercise. "
+            "Its value comes from connecting data engineering, dashboard insight, model validation, and operational risk bands into one consistent credit-risk process.",
+            PURPLE,
+        ),
+        PageBreak(),
+    ]
 
 
 def add_dashboard_export_pages(story):
@@ -284,42 +298,54 @@ def add_dashboard_export_pages(story):
             "5.1 Power BI Dashboard - Overview",
             "Portfolio-level view: customer count, default rate, default customers, average credit amount, late payment share, target distribution, and a risk heatmap.",
             "reports/portfolio_assets/dashboard_page_01.png",
+            "The overview page establishes the portfolio baseline and the key scale of the problem. "
+            "It gives management a starting point: how many customers are being evaluated, what the overall default rate is, and which risk groups deserve deeper analysis.",
         ),
         (
             "5.2 Power BI Dashboard - Customer Profile",
             "Customer-profile view: age, education, income type, occupation, and demographic/profile segments connected to default rate.",
             "reports/portfolio_assets/dashboard_page_02.png",
+            "Customer profile variables are useful for understanding portfolio composition, but they should not be used as stand-alone rejection rules. "
+            "They are best interpreted as context that must be combined with repayment behavior, affordability, and historical credit signals.",
         ),
         (
             "5.3 Power BI Dashboard - Loan and Affordability",
             "Affordability view: credit amount, annuity, credit/income ratio, annuity/income ratio, contract type, and burden heatmap.",
             "reports/portfolio_assets/dashboard_page_03.png",
+            "Affordability is a core credit-risk theme because it connects the loan obligation to repayment capacity. "
+            "The page supports a practical review logic: raw loan amount is less informative than burden ratios such as credit/income and annuity/income.",
         ),
         (
             "5.4 Power BI Dashboard - Credit History",
             "Credit-history view: bureau loans, overdue share, previous refusal share, active loans, debt/credit pressure, and refusal/bureau risk heatmaps.",
             "reports/portfolio_assets/dashboard_page_04.png",
+            "Historical credit behavior provides stronger evidence than static profile data. "
+            "Previous refusals, overdue history, and bureau debt pressure help explain whether the customer has already shown stress in the credit system.",
         ),
         (
             "5.5 Power BI Dashboard - Payment Behavior",
             "Payment-behavior view: late payment, underpayment, credit card utilization, POS DPD, and repayment behavior risk heatmaps.",
             "reports/portfolio_assets/dashboard_page_05.png",
+            "Payment behavior is one of the most decision-useful signals because it reflects what customers actually did, not only what they reported. "
+            "Late payment, underpayment, and high card utilization should therefore be prioritized in manual review.",
         ),
         (
             "5.6 Power BI Dashboard - Risk Segmentation",
             "Risk-segmentation view: risk score groups, high-risk share, very-high-risk share, default rate by segment, and action recommendation summary.",
             "reports/portfolio_assets/dashboard_page_06.png",
+            "The risk-segmentation page converts analysis into action. "
+            "It connects model scores with business bands so that review resources can be focused on high-risk groups instead of being applied evenly across the portfolio.",
         ),
     ]
-    for title, note, image_path in dashboard_pages:
+    for title, note, image_path, conclusion_text in dashboard_pages:
         story += [
             section_band(title),
             Spacer(1, 8),
             p(note, "body"),
             fit_image(image_path, 7.15 * inch, 4.35 * inch),
             Spacer(1, 8),
-            callout(
-                "<b>Dashboard evidence:</b> this page is inserted directly from the Power BI dashboard export. It is not only a written description; it shows the actual dashboard view used for the analysis.",
+            conclusion(
+                conclusion_text,
                 BLUE,
             ),
             PageBreak(),
@@ -359,8 +385,10 @@ def build():
     ]
     story += [simple_table(problem, [1.55 * inch, 5.55 * inch]), Spacer(1, 10)]
     story += [
-        callout(
-            "<b>Portfolio message:</b> I framed the work as a business decision support system: use analytics to decide where review resources should go first.",
+        conclusion(
+            "Credit risk should be framed as resource allocation, not only as default prediction. "
+            "With an 8.07% portfolio baseline, random review would waste substantial effort on low-risk applications. "
+            "The analytical objective is therefore to identify segments that are meaningfully above baseline and route them into the appropriate review path: faster processing, standard review, or stricter control.",
             PURPLE,
         ),
         PageBreak(),
@@ -387,6 +415,12 @@ def build():
     story += [simple_table(feature_flow, [2.05 * inch, 5.05 * inch]), Spacer(1, 8)]
     story += [
         p("<b>Important modeling scope:</b> the headline portfolio statistics are based on 307K+ labeled train applications. The unlabeled Kaggle test file is not used to compute default-rate performance.", "body"),
+        conclusion(
+            "The raw application table describes the borrower at application time, but credit risk is often embedded in historical behavior. "
+            "Building a 271-feature customer-level master table brings application data, bureau history, previous applications, POS, installments, and credit card behavior into one consistent grain. "
+            "This makes the downstream dashboard, diagnostic model, and ML model more reliable because they all read from the same business definitions and the same analytical base.",
+            PURPLE,
+        ),
         PageBreak(),
     ]
 
@@ -416,7 +450,17 @@ def build():
         ["Special values", "Keep intentional categorical codes such as XNA/XAP where they represent business input rather than random missingness."],
         ["Historical aggregation", "Summarize many-to-one history into count, sum, mean, max, recency, rate, and coverage features."],
     ]
-    story += [simple_table(clean, [2.15 * inch, 4.95 * inch]), PageBreak()]
+    story += [
+        simple_table(clean, [2.15 * inch, 4.95 * inch]),
+        Spacer(1, 8),
+        conclusion(
+            "In credit-risk data preparation, cleaning does not simply mean deleting missing values or forcing every unusual value into a generic replacement. "
+            "Missingness, special categories, zero limits, and extreme financial ratios may contain business signal. "
+            "The pipeline therefore uses missing flags, safe ratios, median imputation, and historical aggregation to keep the data usable for models while preserving credit-relevant information.",
+            PURPLE,
+        ),
+        PageBreak(),
+    ]
 
     add_dashboard_export_pages(story)
 
@@ -452,6 +496,13 @@ def build():
             ],
             [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
         ),
+        Spacer(1, 8),
+        conclusion(
+            "Credit / Income Ratio should not be interpreted as a simple linear rule. "
+            "The 2x-4x segment has the highest observed default rate in this view, while higher bands do not continue increasing, likely because of approval selection effects. "
+            "The practical conclusion is that this ratio is useful for affordability screening, but it should be combined with payment behavior, previous refusal, and card utilization before making a credit decision.",
+            BLUE,
+        ),
         PageBreak(),
     ]
 
@@ -472,6 +523,13 @@ def build():
                 ["60%+", "8.2%", "919", "Small group; do not over-read alone."],
             ],
             [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
+        ),
+        Spacer(1, 8),
+        conclusion(
+            "Annuity / Income Ratio is directly linked to monthly repayment capacity. "
+            "The 20%-30% segment shows the highest default rate in this view, suggesting that repayment burden starts to matter once installments take a meaningful share of income. "
+            "However, the pattern is not perfectly monotonic, so affordability should be treated as a necessary but not sufficient risk signal.",
+            BLUE,
         ),
         PageBreak(),
     ]
@@ -494,6 +552,13 @@ def build():
             ],
             [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
         ),
+        Spacer(1, 8),
+        conclusion(
+            "Previous refusal history is one of the clearest historical risk signals. "
+            "Default rate rises from 7.1% with no refusal history to 17.8% in the 75%-100% refusal segment. "
+            "This supports using refusal history as a manual review trigger, while avoiding automatic rejection because refusal reasons may differ across lenders and time periods.",
+            BLUE,
+        ),
         PageBreak(),
     ]
 
@@ -514,6 +579,13 @@ def build():
                 ["50%+", "16.4%", "2,244", "Very high repayment stress; strict review signal."],
             ],
             [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
+        ),
+        Spacer(1, 8),
+        conclusion(
+            "Installment late payment is a strong behavioral signal because it reflects observed repayment behavior rather than declared profile information. "
+            "Default rate increases from around 6.8%-7.0% for no or minimal late payment to 16.4% for the 50%+ late-payment segment. "
+            "This makes late payment suitable for strict review prioritization when combined with affordability and bureau signals.",
+            BLUE,
         ),
         PageBreak(),
     ]
@@ -537,6 +609,13 @@ def build():
             ],
             [1.2 * inch, 1.15 * inch, 1.25 * inch, 3.5 * inch],
         ),
+        Spacer(1, 8),
+        conclusion(
+            "Credit card utilization is the strongest dashboard warning signal. "
+            "Customers using more than 100% of their card limit show a 25.5% default rate, about 3.16x the 8.07% baseline. "
+            "This indicates severe credit-line stress and should trigger stricter review, especially when combined with late payment or previous refusal history.",
+            BLUE,
+        ),
         PageBreak(),
     ]
 
@@ -551,8 +630,10 @@ def build():
     story += [
         simple_table(insight_table, [2.0 * inch, 5.1 * inch]),
         Spacer(1, 8),
-        callout(
-            "<b>Dashboard conclusion:</b> the dashboard turns the master table into a decision layer: which customer groups are risky, why they are risky, and which evidence should guide review priority.",
+        conclusion(
+            "The dashboard evidence shows that default risk is not randomly distributed across the portfolio. "
+            "It concentrates around interpretable credit-risk themes: repayment burden, previous refusal, late payment behavior, and credit-line stress. "
+            "The dashboard therefore gives stakeholders a transparent reason to trust the data before moving into diagnostic modeling and ML scoring.",
             BLUE,
         ),
         PageBreak(),
@@ -577,6 +658,13 @@ def build():
         fit_image("outputs/figures/step06_dashboard/06_step6_charts/roc_curve_main_diagnostic_models.png", 5.75 * inch, 2.55 * inch),
         Spacer(1, 8),
         p("<b>Interpretation:</b> diagnostic modeling proves that the selected risk themes have signal, while keeping the explanation understandable for credit stakeholders.", "body"),
+        Spacer(1, 8),
+        conclusion(
+            "The diagnostic model confirms that the dashboard-selected risk themes still carry signal inside a controlled Logistic Regression framework. "
+            "It uses 28 representative variables instead of all 271 features because the purpose is explanation, not maximum prediction. "
+            "Lift@10 of 2.53x and a top-10% default rate of 20.42% show that the selected variables meaningfully separate higher-risk customers from the 8.07% baseline.",
+            PURPLE,
+        ),
         PageBreak(),
     ]
 
@@ -607,6 +695,13 @@ def build():
     story += [Spacer(1, 10)]
     story += [
         fit_image("outputs/figures/step08_ml/08_step8_figures/v3_advanced_cell14_img01.png", 6.65 * inch, 2.25 * inch),
+        Spacer(1, 8),
+        conclusion(
+            "The ML layer is used for risk ranking, not for unconditional automatic decisions. "
+            "Validation ROC-AUC of 0.7907, PR-AUC of 0.3127, and Lift@10 of 3.66x show that the model is able to concentrate default cases into the highest-score region. "
+            "This is more meaningful than accuracy because default is a minority event and the business value comes from prioritizing the right cases for review.",
+            PURPLE,
+        ),
         PageBreak(),
     ]
 
@@ -657,8 +752,10 @@ def build():
     ]
     story += [simple_table(decision_actions, [1.95 * inch, 5.15 * inch]), Spacer(1, 8)]
     story += [
-        callout(
-            "<b>Decision conclusion:</b> the model creates value by changing the review process. It converts a broad portfolio into prioritized action: fast-track low-risk files, review medium-risk files with clear evidence, and apply strict controls to concentrated high-risk files.",
+        conclusion(
+            "The strongest business value comes from changing the review process. "
+            "Instead of treating all applications equally, the model and dashboard together create a risk-weighted workflow: fast-track low-risk applications, review medium-risk applications with clear evidence, and apply strict controls to concentrated high-risk applications. "
+            "This turns analytics into an operating decision, not just a report metric.",
             GREEN,
         ),
         PageBreak(),
@@ -680,8 +777,15 @@ def build():
             "body",
         ),
         p(
-            "For a DA role, this demonstrates the full chain from data preparation to decision support: clean data, define risk signals, quantify lift, communicate trade-offs, and propose a process that a credit team can actually use.",
+            "This demonstrates the full chain from data preparation to decision support: clean data, define risk signals, quantify lift, communicate trade-offs, and propose a process that a credit team can actually use.",
             "body",
+        ),
+        Spacer(1, 8),
+        conclusion(
+            "The recommended operating model is to use dashboard rules and model scores together. "
+            "Dashboard signals explain why an application is risky, while the ML score prioritizes which applications should be reviewed first. "
+            "This combination builds confidence in the data because business users can trace the score back to understandable credit-risk drivers.",
+            GREEN,
         ),
         PageBreak(),
     ]
@@ -702,7 +806,17 @@ def build():
         ["AUC sensitivity", "Removing occupation/organization/gender barely reduced AUC, showing these variables are not essential for predictive power."],
         ["Human-in-the-loop", "Scores support prioritization; final approval/rejection must still follow policy, compliance, and analyst judgment."],
     ]
-    story += [simple_table(gov, [1.8 * inch, 5.3 * inch]), PageBreak()]
+    story += [
+        simple_table(gov, [1.8 * inch, 5.3 * inch]),
+        Spacer(1, 8),
+        conclusion(
+            "In credit risk, a model with good AUC is still incomplete without governance. "
+            "Strong predictors such as external scores may be black-box, and profile-related variables may create proxy-bias concerns. "
+            "The correct deployment posture is therefore human-in-the-loop: use the score to prioritize review, monitor fairness and drift, and keep final approval decisions under policy and compliance control.",
+            RED,
+        ),
+        PageBreak(),
+    ]
 
     story += [section_band("13. Evidence, Reproducibility, and Handover Notes"), Spacer(1, 10)]
     evidence = [
@@ -726,6 +840,13 @@ def build():
                 bullet("I used Power BI to convert the analytical table into stakeholder-facing monitoring views."),
                 bullet("The main business value is not just AUC; it is review prioritization: the top 29.6% risk group captures about 67.9% of default cases."),
             ]
+        ),
+        Spacer(1, 8),
+        conclusion(
+            "The project demonstrates the full analytics chain from data preparation to business decision support. "
+            "The central finding is that default risk is concentrated in measurable groups, especially customers with repayment stress, previous refusal history, late-payment behavior, and credit-line overuse. "
+            "The main value is therefore not only model performance, but the ability to help the business review the right applications first and justify that review with transparent data evidence.",
+            PURPLE,
         ),
         Spacer(1, 8),
         callout(
