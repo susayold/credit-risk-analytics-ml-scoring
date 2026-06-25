@@ -19,7 +19,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v5.pdf"
+OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v6.pdf"
 
 NAVY = colors.HexColor("#172052")
 PURPLE = colors.HexColor("#6D45F6")
@@ -243,8 +243,7 @@ def add_front_page(story, repo_url):
             "subtitle",
         ),
         p(
-            f"<b>Repository:</b> <link href='{repo_url}' color='blue'>{repo_url}</link> "
-            "(private repository; access available on request).",
+            f"<b>Project repository:</b> <link href='{repo_url}' color='blue'>{repo_url}</link>",
             "body",
         ),
         Spacer(1, 8),
@@ -282,32 +281,32 @@ def add_front_page(story, repo_url):
 def add_dashboard_export_pages(story):
     dashboard_pages = [
         (
-            "2. Power BI Dashboard Export - Overview",
+            "5.1 Power BI Dashboard - Overview",
             "Portfolio-level view: customer count, default rate, default customers, average credit amount, late payment share, target distribution, and a risk heatmap.",
             "reports/portfolio_assets/dashboard_page_01.png",
         ),
         (
-            "2. Power BI Dashboard Export - Customer Profile",
+            "5.2 Power BI Dashboard - Customer Profile",
             "Customer-profile view: age, education, income type, occupation, and demographic/profile segments connected to default rate.",
             "reports/portfolio_assets/dashboard_page_02.png",
         ),
         (
-            "2. Power BI Dashboard Export - Loan and Affordability",
+            "5.3 Power BI Dashboard - Loan and Affordability",
             "Affordability view: credit amount, annuity, credit/income ratio, annuity/income ratio, contract type, and burden heatmap.",
             "reports/portfolio_assets/dashboard_page_03.png",
         ),
         (
-            "2. Power BI Dashboard Export - Credit History",
+            "5.4 Power BI Dashboard - Credit History",
             "Credit-history view: bureau loans, overdue share, previous refusal share, active loans, debt/credit pressure, and refusal/bureau risk heatmaps.",
             "reports/portfolio_assets/dashboard_page_04.png",
         ),
         (
-            "2. Power BI Dashboard Export - Payment Behavior",
+            "5.5 Power BI Dashboard - Payment Behavior",
             "Payment-behavior view: late payment, underpayment, credit card utilization, POS DPD, and repayment behavior risk heatmaps.",
             "reports/portfolio_assets/dashboard_page_05.png",
         ),
         (
-            "2. Power BI Dashboard Export - Risk Segmentation",
+            "5.6 Power BI Dashboard - Risk Segmentation",
             "Risk-segmentation view: risk score groups, high-risk share, very-high-risk share, default rate by segment, and action recommendation summary.",
             "reports/portfolio_assets/dashboard_page_06.png",
         ),
@@ -343,9 +342,8 @@ def build():
     repo_url = "https://github.com/susayold/credit-risk-analytics-ml-scoring"
 
     add_front_page(story, repo_url)
-    add_dashboard_export_pages(story)
 
-    story += [section_band("3. Business Problem and Decision Target"), Spacer(1, 10)]
+    story += [section_band("2. Business Problem and Decision Target"), Spacer(1, 10)]
     story += [
         p(
             "In credit approval, the business risk is two-sided: approving a truly high-risk customer increases credit loss, while rejecting or delaying a good customer hurts revenue and customer experience. The project therefore focuses on ranking risk and allocating review effort, not replacing credit policy.",
@@ -368,7 +366,7 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("4. Data Architecture and Feature Flow"), Spacer(1, 10)]
+    story += [section_band("3. Data Architecture and Feature Flow"), Spacer(1, 10)]
     flow = [
         ["Stage", "Main work", "Evidence in repository"],
         ["Data understanding", "Profile application and historical credit tables; define grain and target.", "src/step02_data_understanding.py"],
@@ -392,10 +390,10 @@ def build():
         PageBreak(),
     ]
 
-    story += [section_band("5. SQL ETL and Cleaning Logic"), Spacer(1, 10)]
+    story += [section_band("4. SQL ETL and Cleaning Logic"), Spacer(1, 10)]
     story += [
         p(
-            "The original project was executed mainly with Python/pandas. I added a SQL ETL version to document how the data engineering layer can be implemented with SQL for interview and production-style explanation.",
+            "The original project was executed mainly with Python/pandas. I added a SQL ETL version to document how the data engineering layer can be implemented with SQL for technical handover and review.",
             "body",
         )
     ]
@@ -419,6 +417,8 @@ def build():
         ["Historical aggregation", "Summarize many-to-one history into count, sum, mean, max, recency, rate, and coverage features."],
     ]
     story += [simple_table(clean, [2.15 * inch, 4.95 * inch]), PageBreak()]
+
+    add_dashboard_export_pages(story)
 
     story += [section_band("6. Dashboard Evidence: Five Core Risk Signals"), Spacer(1, 10)]
     story += [
@@ -704,7 +704,7 @@ def build():
     ]
     story += [simple_table(gov, [1.8 * inch, 5.3 * inch]), PageBreak()]
 
-    story += [section_band("13. Evidence, Reproducibility, and Interview Talking Points"), Spacer(1, 10)]
+    story += [section_band("13. Evidence, Reproducibility, and Handover Notes"), Spacer(1, 10)]
     evidence = [
         ["Repository artifact", "What it proves"],
         ["README.md", "Project overview, results, run instructions, and repo structure."],
@@ -720,7 +720,7 @@ def build():
     story += [
         KeepTogether(
             [
-                p("<b>How I would explain this in an interview:</b>", "h2"),
+                p("<b>Project explanation summary:</b>", "h2"),
                 bullet("I used SQL for the data engineering logic: cleaning flags, missing flags, feature engineering, joins, and customer-level aggregation."),
                 bullet("I used Python for analytics and modeling because ML evaluation, Logistic Regression, LightGBM, SHAP, and validation workflows are more suitable there."),
                 bullet("I used Power BI to convert the analytical table into stakeholder-facing monitoring views."),
@@ -729,7 +729,7 @@ def build():
         ),
         Spacer(1, 8),
         callout(
-            "<b>CV-ready summary:</b> Built a credit risk analytics and ML scoring pipeline on 307K+ labeled applications, created a 271-feature customer-level master table, identified high-risk borrower segments, and developed risk bands that improved review targeting efficiency by 2.27x versus random review.",
+            "<b>Project summary:</b> Built a credit risk analytics and ML scoring pipeline on 307K+ labeled applications, created a 271-feature customer-level master table, identified high-risk borrower segments, and developed risk bands that improved review targeting efficiency by 2.27x versus random review.",
             PURPLE,
         ),
     ]
