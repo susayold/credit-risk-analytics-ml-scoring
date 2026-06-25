@@ -19,7 +19,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v7.pdf"
+OUT = ROOT / "reports" / "portfolio_credit_risk_analytics_ml_scoring_detailed_v8.pdf"
 
 NAVY = colors.HexColor("#172052")
 PURPLE = colors.HexColor("#6D45F6")
@@ -243,7 +243,7 @@ def add_front_page(story, repo_url):
     story += [
         p("Credit Risk Analytics & ML Scoring Pipeline", "title"),
         p(
-            "Detailed portfolio work sample | Python, SQL-style ETL, Power BI, LightGBM, Logistic Regression, SHAP | May-Jun 2026",
+            "Detailed portfolio work sample | Python, SQL ETL, Power BI, LightGBM, Logistic Regression, SHAP | May-Jun 2026",
             "subtitle",
         ),
         p(
@@ -275,7 +275,7 @@ def add_front_page(story, repo_url):
     deliverables = [
         ["My responsibility", "Concrete output"],
         ["Data engineering", "Created a customer-level analytical table with 271 features from application, bureau, previous application, POS, installment, and credit card history."],
-        ["SQL ETL translation", "Documented SQL joins, cleaning flags, missing-value flags, feature engineering, historical aggregation, and master-table build logic."],
+        ["SQL data engineering", "Implemented SQL joins, cleaning flags, missing-value flags, feature engineering, historical aggregation, and master-table build logic."],
         ["Analytics and dashboarding", "Produced descriptive statistics, correlation/quantile analysis, risk segments, and Power BI-ready default-rate insights."],
         ["Modeling and governance", "Built diagnostic Logistic Regression and ML prioritization model; added SHAP, sensitivity, and fairness/proxy checks."],
     ]
@@ -427,7 +427,7 @@ def build():
     story += [section_band("4. SQL ETL and Cleaning Logic"), Spacer(1, 10)]
     story += [
         p(
-            "The original project was executed mainly with Python/pandas. I added a SQL ETL version to document how the data engineering layer can be implemented with SQL for technical handover and review.",
+            "The project includes a SQL ETL implementation for the data engineering layer, so cleaning, feature engineering, aggregation, and master-table build logic can be reviewed and run directly in SQL.",
             "body",
         )
     ]
