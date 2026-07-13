@@ -40,7 +40,8 @@ credit-risk-analytics-ml-scoring/
 |-- dashboard/              Power BI source, PDF export, and six page images
 |-- data/
 |   |-- raw/                Kaggle source files, not committed
-|   `-- processed/          Compressed customer-level outputs
+|   |-- processed/          Compressed customer-level outputs
+|   `-- splits/             Fixed Step 8 train, calibration, and validation IDs
 |-- docs/                   Case study, manifests, source-of-truth, SQL/Python mapping
 |-- models/                 Model cards and model evidence manifest
 |-- notebooks/              Official Step 8 notebook plus archive
