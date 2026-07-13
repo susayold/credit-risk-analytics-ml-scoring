@@ -23,6 +23,13 @@ outputs/**/tmp/
 outputs/**/temp/
 *.log
 
+# Recruiter website build artifacts
+site/node_modules/
+site/.next/
+site/.vinext/
+site/dist/
+site/.wrangler/
+
 # Superseded portfolio drafts kept only locally if a PDF viewer locks them.
 reports/portfolio_credit_risk_analytics_ml_scoring.pdf
 reports/portfolio_credit_risk_analytics_ml_scoring_detailed.pdf

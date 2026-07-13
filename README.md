@@ -1,110 +1,103 @@
 # Credit Risk Analytics & ML Scoring Pipeline
 
-End-to-end credit risk analytics project on Home Credit loan applications.
+End-to-end credit risk case study combining **SQL**, **Python**, **Power BI**, and machine learning to turn 307,511 labeled loan applications and multi-table credit history into a customer-level decision layer.
 
-The project builds a customer-level risk analytics table, creates SQL ETL references, produces dashboard-ready outputs, and supports ML-based risk prioritization.
+## Power BI Dashboard
 
-## Highlights
+The six-page dashboard is the main business deliverable. It connects portfolio health, borrower affordability, credit history, payment behavior, and risk segmentation in one review workflow.
 
-- Built on 307K+ labeled loan applications.
-- Created a 271-feature customer-level master table.
-- Identified high-risk credit card utilization segment with 25.5% default rate, 3.16x above the 8.07% portfolio baseline.
-- ML review prioritization reached ROC-AUC 0.7907, PR-AUC 0.3127, and Lift@10 3.66x.
-- Reviewing the top 29.6% highest-risk applications captured about 67.9% of defaults, improving review efficiency by 2.27x versus random review.
+![Power BI portfolio overview](dashboard/screenshots/dashboard_page_01.png)
+
+| Dashboard page | Decision question |
+|---|---|
+| Portfolio Overview | How large is the portfolio and where is default concentrated? |
+| Customer Profile | Which customer groups require descriptive monitoring? |
+| Loan & Affordability | Is the requested credit proportionate to income and repayment burden? |
+| Credit History | Do external obligations and prior refusals reveal hidden risk? |
+| Payment Behavior | Are late payment, underpayment, or revolving utilization signals deteriorating? |
+| Risk Segmentation | Which applications should be processed quickly, reviewed, or controlled more closely? |
+
+- Editable report: [`dashboard/dashboard.pbix`](dashboard/dashboard.pbix)
+- PDF export: [`dashboard/dashboard.pdf`](dashboard/dashboard.pdf)
+- Recruiter-facing website: [`site/`](site/)
+
+## Business Results
+
+- Built a **271-feature customer-level master table** from 307,511 labeled applications.
+- Established an **8.07% portfolio default baseline**; accuracy alone is therefore not a reliable evaluation metric.
+- Identified credit card utilization above 100% as a severe behavioral signal: **25.50% default**, or **3.16x baseline**.
+- Found customers with at least two overdue bureau loans had a **36.80% default rate**.
+- LightGBM validation performance reached **0.7907 ROC-AUC**, **0.3127 PR-AUC**, **0.437 KS**, and **3.66x Lift@10**.
+- Reviewing the top 30% highest model scores captured **69.1% of validation defaults**, a **2.30x concentration** versus random review.
+- Converted scores into review priorities under a human-in-the-loop framework; the project does not recommend automatic rejection from model output alone.
 
 ## Repository Structure
 
 ```text
 credit-risk-analytics-ml-scoring/
-  src/                 Python pipeline and analytics scripts
-  sql/                 SQL ETL version for cleaning, feature engineering, joins, and aggregation
-  notebooks/           ML notebook for model benchmarking and governance
-  data/
-    raw/               Place Kaggle raw CSV files here
-    processed/         Final processed master outputs
-  outputs/
-    tables/            Result tables by project step
-    figures/           Result figures by project step
-  dashboard/           Power BI dashboard
-  reports/             Final report and presentation
-  docs/                SQL mapping and project documentation
+├── dashboard/              Power BI source, PDF export, and six page images
+├── data/
+│   ├── raw/                Kaggle source files (not committed)
+│   └── processed/          Compressed customer-level outputs
+├── docs/                   Case study, manifests, and SQL/Python mapping
+├── notebooks/              Modeling and governance notebooks
+├── outputs/
+│   ├── figures/            Reproducible analytical figures
+│   └── tables/             Step-level evidence and model metrics
+├── reports/                Final presentation and report artifacts
+├── site/                   Recruiter-facing project website
+├── sql/                    Seven SQL ETL and analysis scripts
+├── src/                    Python analytics and modeling pipeline
+├── run_pipeline.py         Main local runner
+└── requirements.txt        Python dependencies
 ```
 
-## Data Setup
+## Technical Workflow
 
-Download the Home Credit Default Risk dataset from Kaggle and place these files in `data/raw/`:
+| Layer | Technology | Responsibility |
+|---|---|---|
+| Data engineering | SQL | Cleaning flags, feature engineering, historical table aggregation, customer-level joins, descriptive segments |
+| Analytics | Python | Data validation, descriptive analysis, correlations, diagnostic Logistic Regression, ML benchmarking, SHAP, governance checks |
+| Decision support | Power BI | Six-page dashboard that translates analytical evidence into portfolio monitoring and review priorities |
+| Portfolio delivery | HTML/CSS/React | Public-facing case study with dashboard-first storytelling and reproducible evidence links |
 
-```text
-application_train.csv
-application_test.csv
-bureau.csv
-bureau_balance.csv
-previous_application.csv
-POS_CASH_balance.csv
-installments_payments.csv
-credit_card_balance.csv
-sample_submission.csv
-HomeCredit_columns_description.csv
-```
+## Run the Analytics
 
-Raw CSV files are intentionally ignored by Git because they are large. The processed master outputs are included and tracked with Git LFS.
-
-## Run the Pipeline
-
-Install dependencies:
+1. Download the Home Credit Default Risk dataset and place the CSV files in `data/raw/`.
+2. Install Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the main pipeline:
+3. Run the pipeline:
 
 ```bash
 python run_pipeline.py
 ```
 
-If raw data exists in `data/raw`, the script runs Step 5 master-table aggregation first. If raw data is not available, it uses the included processed master output to run descriptive analytics.
-
-To run only the descriptive analytics from the processed file:
+Use the included processed train output when raw data is unavailable:
 
 ```bash
 python run_pipeline.py --skip-master
 ```
 
-## SQL ETL Version
-
-The `sql/` folder documents the SQL-first data engineering layer:
-
-- cleaning flags
-- missing-value flags
-- feature engineering
-- historical table aggregation
-- customer-level master table build
-- descriptive statistics and segment queries
-
-Python remains the modeling layer for Logistic Regression, LightGBM, SHAP, and model evaluation.
-
-## Dashboard
-
-Power BI dashboard:
-
-```text
-dashboard/dashboard.pbix
-dashboard/dashboard.pdf
-```
-
-`dashboard.pbix` is the editable Power BI file. `dashboard.pdf` is the exported dashboard view used as direct visual evidence in the portfolio PDF.
-
-This file is larger than normal GitHub file limits and should be tracked using Git LFS.
-
-## Git LFS
-
-Before pushing to GitHub:
+## Run the Portfolio Website
 
 ```bash
-git lfs install
-git lfs track "*.pbix" "*.csv.gz" "*.pptx" "*.docx" "*.pdf" "*.xlsx"
-git add .gitattributes
+cd site
+npm install
+npm run dev
 ```
 
-Then commit and push normally.
+Then open the local URL shown in the terminal. The website uses the actual dashboard exports in `site/public/dashboard/`.
+
+## Data and Modeling Notes
+
+- Reported validation metrics use labeled `application_train.csv` records only.
+- Raw Kaggle files are excluded because of size and licensing considerations.
+- Processed binaries and Power BI files use Git LFS.
+- Rule-based dashboard segments and ML score bands are separate analytical products and are labeled accordingly.
+- External score variables are powerful but partially black-box; fairness monitoring and human review remain necessary.
+
+See [`docs/PORTFOLIO_CASE_STUDY.md`](docs/PORTFOLIO_CASE_STUDY.md) for the full business interpretation and [`docs/SQL_TO_PYTHON_MAPPING.md`](docs/SQL_TO_PYTHON_MAPPING.md) for implementation traceability.
