@@ -1,0 +1,5 @@
+﻿split,rows,default_rate
+fit_train,196805,0.077488
+calibration,49202,0.077477
+final_validation,61504,0.093701
+test,48744,

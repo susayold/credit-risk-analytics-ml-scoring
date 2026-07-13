@@ -3,7 +3,7 @@
 ## 1. Initialize Git
 
 ```bash
-cd D:/Code/DA/credit-risk-analytics-ml-scoring
+cd credit-risk-analytics-ml-scoring
 git init
 ```
 
@@ -13,7 +13,7 @@ This repository includes files larger than 100 MB:
 
 - `data/processed/final_customer_analysis_table.csv.gz`
 - `data/processed/final_customer_analysis_train.csv.gz`
-- `dashboard/credit_risk_dashboard.pbix`
+- `dashboard/dashboard.pbix`
 
 Use Git LFS before committing:
 
@@ -43,4 +43,3 @@ git push -u origin main
 Raw Kaggle CSV files are not committed. They should be downloaded into `data/raw/` before running the full ETL pipeline.
 
 The processed outputs and dashboard are included with Git LFS so the repository still shows complete results.
-

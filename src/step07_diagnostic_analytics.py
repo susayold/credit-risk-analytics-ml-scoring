@@ -1,5 +1,5 @@
 ﻿"""
-Step 6 â€” Diagnostic Analytics: Validating Dashboard Insights
+Step 7 - Diagnostic Analytics: Validating Dashboard Insights
 
 Purpose
 -------
@@ -21,10 +21,10 @@ tables:
 Input
 -----
 Preferred:
-    D:/Code/DA/1/step4_outputs/data/final_customer_analysis_train.csv.gz
+    data/processed/final_customer_analysis_train.csv.gz
 
 Fallback:
-    D:/Code/DA/1/powerbi_inputs/final_customer_analysis_train.csv
+    outputs/final/final_customer_analysis_train.csv
 
 Kaggle:
     Put final_customer_analysis_train.csv or .csv.gz in a Kaggle input dataset,
@@ -32,14 +32,14 @@ Kaggle:
 
 Outputs
 -------
-    step6_outputs/
-        step6_diagnostic_analytics_report.html
-        step6_key_results_for_chat.md
+    outputs/step07_diagnostic_runtime/
+        step7_diagnostic_analytics_report.html
+        step7_key_results_for_chat.md
         data/diagnostic_customer_dataset.csv.gz
         tables/*.csv
         tables/research_logistic_model_fit.csv
         tables/research_logistic_coefficients.csv
-        tables/step6_diagnostic_summary_tables.xlsx
+        tables/step7_diagnostic_summary_tables.xlsx
         charts/*.png
 """
 
@@ -57,15 +57,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 # =============================================================================
 # 0. Configuration
 # =============================================================================
 
-LOCAL_PROJECT_DIR = Path("D:/Code/DA/1")
-PROJECT_DIR = LOCAL_PROJECT_DIR if LOCAL_PROJECT_DIR.exists() else Path.cwd()
+PROJECT_DIR = Path(os.environ.get("CREDIT_RISK_PROJECT_DIR", Path(__file__).resolve().parents[1]))
 
 # Optional heavy ML packages can be installed locally to the project folder,
 # which is useful when the user site-packages drive has limited free space.
@@ -77,12 +76,12 @@ if LOCAL_PACKAGE_DIR.exists():
 # INPUT_PATH = Path("/kaggle/input/your-dataset/final_customer_analysis_train.csv.gz")
 INPUT_PATH: Path | None = None
 
-OUTPUT_DIR = PROJECT_DIR / "step6_outputs"
+OUTPUT_DIR = PROJECT_DIR / "outputs" / "step07_diagnostic_runtime"
 TABLE_DIR = OUTPUT_DIR / "tables"
 CHART_DIR = OUTPUT_DIR / "charts"
 DATA_DIR = OUTPUT_DIR / "data"
-PROGRESS_LOG_PATH = OUTPUT_DIR / "step6_progress.log"
-PROGRESS_STATE_PATH = OUTPUT_DIR / "step6_progress_state.json"
+PROGRESS_LOG_PATH = OUTPUT_DIR / "step7_progress.log"
+PROGRESS_STATE_PATH = OUTPUT_DIR / "step7_progress_state.json"
 
 TARGET = "TARGET"
 RANDOM_STATE = 42
@@ -131,7 +130,7 @@ def format_duration(seconds: float | int | None) -> str:
 def reset_progress_log() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     header = [
-        "Step 6 Diagnostic Analytics progress log",
+        "STEP 7 Diagnostic Analytics progress log",
         f"Started at: {time.strftime('%Y-%m-%d %H:%M:%S')}",
         "-" * 90,
     ]
@@ -168,7 +167,7 @@ def write_progress_state(stage: str, done: int, total: int, current: str, status
 def log(msg: str) -> None:
     elapsed = format_duration(time.time() - SCRIPT_START_TIME)
     timestamp = time.strftime("%H:%M:%S")
-    line = f"[STEP 6][{timestamp}][elapsed {elapsed}] {msg}"
+    line = f"[STEP 7][{timestamp}][elapsed {elapsed}] {msg}"
     print(line, flush=True)
     try:
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -1005,7 +1004,7 @@ def model_comparison(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, object]]
         from sklearn.preprocessing import OneHotEncoder
     except Exception as e:
         raise ImportError(
-            "Step 6 model comparison requires scikit-learn. "
+            "STEP 7 model comparison requires scikit-learn. "
             "Kaggle normally has it preinstalled. If running locally, install it with: "
             "pip install scikit-learn scipy statsmodels seaborn openpyxl "
             "lightgbm xgboost catboost"
@@ -1437,7 +1436,7 @@ def model_comparison(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, object]]
         from sklearn.model_selection import train_test_split
     except Exception as e:
         raise ImportError(
-            "Step 6 model comparison requires scikit-learn. "
+            "STEP 7 model comparison requires scikit-learn. "
             "Kaggle normally has it preinstalled. If running locally, install it with: "
             "pip install scikit-learn scipy statsmodels seaborn openpyxl "
             "lightgbm xgboost catboost"
@@ -1649,7 +1648,7 @@ def plot_model_comparison(comp: pd.DataFrame) -> None:
 
 # -----------------------------------------------------------------------------
 # Diagnostic-only model-comparison routine:
-# This final replacement keeps Step 6 as Diagnostic Analytics, not ML support.
+# This final replacement keeps STEP 7 as Diagnostic Analytics, not ML support.
 # It runs statistical / econometric binary-outcome models that are applicable to
 # the current cross-sectional customer-level dataset and exports an applicability
 # matrix for models that are not valid for this data structure.
@@ -1691,7 +1690,7 @@ def binary_model_catalog() -> list[dict[str, str]]:
         {"group": "Survival / event history", "model_name": "Discrete-Time Hazard Model", "status": "not_run", "reason": "Requires person-period data and event timing; current TARGET is a one-time binary outcome."},
         {"group": "Survival analysis", "model_name": "Cox Proportional Hazards Model", "status": "not_run", "reason": "Requires time-to-event and censoring information, not just TARGET 0/1."},
         {"group": "Credit scoring", "model_name": "WOE Logistic Regression", "status": "deferred", "reason": "Valid credit-scoring extension, but requires a separate WOE/binning pipeline to avoid mixing diagnostic grouping with scorecard development."},
-        {"group": "Credit scoring", "model_name": "Logistic Scorecard Model", "status": "deferred", "reason": "Valid later scorecard step after WOE/binning; not part of current diagnostic-only Step 6."},
+        {"group": "Credit scoring", "model_name": "Logistic Scorecard Model", "status": "deferred", "reason": "Valid later scorecard step after WOE/binning; not part of current diagnostic-only STEP 7."},
     ]
 
 
@@ -2311,7 +2310,7 @@ def model_comparison(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, object]]
         from sklearn.model_selection import train_test_split
     except Exception as e:
         raise ImportError(
-            "Step 6 model comparison requires scikit-learn and statsmodels. "
+            "STEP 7 model comparison requires scikit-learn and statsmodels. "
             "Install with: pip install scikit-learn scipy statsmodels seaborn openpyxl"
         ) from e
 
@@ -3177,7 +3176,7 @@ def df_to_html_table(df: pd.DataFrame, max_rows: int | None = 20, percent_cols: 
 
 
 def make_excel_summary(tables: dict[str, pd.DataFrame]) -> Path:
-    path = TABLE_DIR / "step6_diagnostic_summary_tables.xlsx"
+    path = TABLE_DIR / "step7_diagnostic_summary_tables.xlsx"
     with pd.ExcelWriter(path, engine="openpyxl") as writer:
         for name, df in tables.items():
             if df is not None and not df.empty:
@@ -3196,7 +3195,7 @@ def make_key_results_markdown(
 ) -> Path:
     base_rate = df[TARGET].mean()
     lines = []
-    lines.append("# Step 6 Diagnostic Analytics â€” Key Results for Review")
+    lines.append("# STEP 7 Diagnostic Analytics â€” Key Results for Review")
     lines.append("")
     lines.append(f"- Rows used: {len(df):,}")
     lines.append(f"- Baseline default rate: {base_rate:.2%}")
@@ -3310,26 +3309,26 @@ def make_key_results_markdown(
     lines.append("")
 
     lines.append("## Files to Send Back")
-    lines.append("- `step6_outputs/step6_key_results_for_chat.md`")
-    lines.append("- `step6_outputs/step6_diagnostic_analytics_report.html`")
-    lines.append("- `step6_outputs/tables/diagnostic_model_comparison.csv`")
-    lines.append("- `step6_outputs/tables/full_model_evaluation_summary.csv`")
-    lines.append("- `step6_outputs/tables/terminal_model_evaluation_table.txt`")
-    lines.append("- `step6_outputs/tables/threshold_analysis_all_models.csv`")
-    lines.append("- `step6_outputs/tables/calibration_by_decile.csv`")
-    lines.append("- `step6_outputs/tables/hosmer_lemeshow_test.csv`")
-    lines.append("- `step6_outputs/tables/specification_comparison_research_table.csv`")
-    lines.append("- `step6_outputs/tables/algorithm_comparison_research_table.csv`")
-    lines.append("- `step6_outputs/tables/diagnostic_binary_model_family_comparison.csv`")
-    lines.append("- `step6_outputs/tables/model_applicability_matrix.csv`")
-    lines.append("- `step6_outputs/tables/controlled_logistic_odds_ratios.csv`")
-    lines.append("- `step6_outputs/tables/research_wald_tests.csv`")
-    lines.append("- `step6_outputs/tables/research_marginal_effects.csv`")
-    lines.append("- `step6_outputs/tables/vif_diagnostic_features.csv`")
-    lines.append("- `step6_outputs/tables/segment_risk_index_all_variables.csv`")
-    lines.append("- Optional: zip the full `step6_outputs` folder.")
+    lines.append("- `step7_outputs/step7_key_results_for_chat.md`")
+    lines.append("- `step7_outputs/step7_diagnostic_analytics_report.html`")
+    lines.append("- `step7_outputs/tables/diagnostic_model_comparison.csv`")
+    lines.append("- `step7_outputs/tables/full_model_evaluation_summary.csv`")
+    lines.append("- `step7_outputs/tables/terminal_model_evaluation_table.txt`")
+    lines.append("- `step7_outputs/tables/threshold_analysis_all_models.csv`")
+    lines.append("- `step7_outputs/tables/calibration_by_decile.csv`")
+    lines.append("- `step7_outputs/tables/hosmer_lemeshow_test.csv`")
+    lines.append("- `step7_outputs/tables/specification_comparison_research_table.csv`")
+    lines.append("- `step7_outputs/tables/algorithm_comparison_research_table.csv`")
+    lines.append("- `step7_outputs/tables/diagnostic_binary_model_family_comparison.csv`")
+    lines.append("- `step7_outputs/tables/model_applicability_matrix.csv`")
+    lines.append("- `step7_outputs/tables/controlled_logistic_odds_ratios.csv`")
+    lines.append("- `step7_outputs/tables/research_wald_tests.csv`")
+    lines.append("- `step7_outputs/tables/research_marginal_effects.csv`")
+    lines.append("- `step7_outputs/tables/vif_diagnostic_features.csv`")
+    lines.append("- `step7_outputs/tables/segment_risk_index_all_variables.csv`")
+    lines.append("- Optional: zip the full `step7_outputs` folder.")
 
-    path = OUTPUT_DIR / "step6_key_results_for_chat.md"
+    path = OUTPUT_DIR / "step7_key_results_for_chat.md"
     path.write_text("\n".join(lines), encoding="utf-8")
     return path
 
@@ -3419,7 +3418,7 @@ def make_html_report(
 <html>
 <head>
 <meta charset="utf-8">
-<title>Step 6 Diagnostic Analytics Report</title>
+<title>STEP 7 Diagnostic Analytics Report</title>
 <style>
 body {{
     font-family: Arial, sans-serif;
@@ -3487,7 +3486,7 @@ table.data-table tr:nth-child(even) {{ background: #F7F3FF; }}
 </style>
 </head>
 <body>
-<h1>Step 6 â€” Diagnostic Analytics</h1>
+<h1>STEP 7 â€” Diagnostic Analytics</h1>
 <p class="subtitle">Validating dashboard insights before Machine Learning Support</p>
 
 <div class="kpi-grid">
@@ -3534,7 +3533,7 @@ statistical tests, effect sizes, interaction diagnostics and controlled logistic
 
 <div class="card">
 <h2>7A. Model Applicability Matrix</h2>
-<p class="note">Not every binary-outcome model is valid for this dataset. This table documents which models are run in Step 6 and why other models are deferred or not applicable.</p>
+<p class="note">Not every binary-outcome model is valid for this dataset. This table documents which models are run in STEP 7 and why other models are deferred or not applicable.</p>
 <div class="table-wrap">{df_to_html_table(model_applicability, max_rows=None)}</div>
 </div>
 
@@ -3546,7 +3545,7 @@ statistical tests, effect sizes, interaction diagnostics and controlled logistic
 
 <div class="card">
 <h2>7C. Diagnostic Binary Model-Family Comparison</h2>
-<p class="note">Same full diagnostic feature set. Different statistical/econometric binary-response models. Machine Learning models are intentionally excluded from this Step 6 diagnostic-only comparison.</p>
+<p class="note">Same full diagnostic feature set. Different statistical/econometric binary-response models. Machine Learning models are intentionally excluded from this STEP 7 diagnostic-only comparison.</p>
 <div class="table-wrap">{df_to_html_table(algo_comp, max_rows=None)}</div>
 </div>
 
@@ -3655,14 +3654,14 @@ statistical tests, effect sizes, interaction diagnostics and controlled logistic
 <li><code>tables/vif_diagnostic_features.csv</code></li>
 <li><code>tables/high_vif_features.csv</code></li>
 <li><code>tables/controlled_logistic_odds_ratios.csv</code></li>
-<li><code>tables/step6_diagnostic_summary_tables.xlsx</code></li>
+<li><code>tables/step7_diagnostic_summary_tables.xlsx</code></li>
 <li><code>data/diagnostic_customer_dataset.csv.gz</code></li>
 </ul>
 </div>
 </body>
 </html>
 """
-    path = OUTPUT_DIR / "step6_diagnostic_analytics_report.html"
+    path = OUTPUT_DIR / "step7_diagnostic_analytics_report.html"
     path.write_text(html, encoding="utf-8")
     return path
 
@@ -3799,7 +3798,7 @@ def main() -> None:
         "diagnostic_dataset": str(diag_dataset_path),
         "runtime_seconds": round(time.time() - t0, 2),
     }
-    (OUTPUT_DIR / "step6_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    (OUTPUT_DIR / "step7_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     main_progress.finish("Create Markdown, HTML report, and manifest")
     main_progress.done_all()
 

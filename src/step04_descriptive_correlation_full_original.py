@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import json
 import warnings
+import os
 from pathlib import Path
 
 import numpy as np
@@ -57,16 +58,17 @@ sns.set_theme(style="whitegrid", palette="Set2")
 # CONFIG
 # ============================================================
 
-# Primary input: the Step 4 customer-level analytical table (local).
-# Fallbacks cover the clean_pipeline copy and a Kaggle working path.
+PROJECT_ROOT = Path(os.environ.get("CREDIT_RISK_PROJECT_DIR", Path(__file__).resolve().parents[1]))
+
+# Primary input: the Step 5 customer-level analytical table.
+# Fallbacks cover Kaggle working paths and ad hoc local copies.
 CANDIDATE_INPUTS = [
-    Path(r"D:\Code\DA\1\step4_outputs\data\final_customer_analysis_train.csv.gz"),
-    Path(r"D:\Code\DA\1\clean_pipeline\outputs\step04\data\final_customer_analysis_train.csv.gz"),
+    PROJECT_ROOT / "data" / "processed" / "final_customer_analysis_train.csv.gz",
     Path("/kaggle/working/step4_outputs/data/final_customer_analysis_train.csv.gz"),
     Path("final_customer_analysis_train.csv.gz"),
 ]
 
-OUT_PATH = Path(r"D:\Code\DA\1\step2_full_outputs")
+OUT_PATH = PROJECT_ROOT / "outputs" / "tables" / "step04_descriptive_full_original"
 TABLE_PATH = OUT_PATH / "tables"
 FIG_PATH = OUT_PATH / "figures"
 TABLE_PATH.mkdir(parents=True, exist_ok=True)

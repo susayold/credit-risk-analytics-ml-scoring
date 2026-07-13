@@ -1,0 +1,17 @@
+relative_path,size_bytes,status,artifact_type
+outputs/final/champion_validation_metrics.csv,474,final,csv_evidence
+outputs/final/cross_validation_metrics.csv,1090,final,csv_evidence
+outputs/final/dashboard_rule_segments.csv,713,final,csv_evidence
+outputs/final/data_split_report.csv,129,final,csv_evidence
+outputs/final/decision_bands.csv,525,final,csv_evidence
+outputs/final/diagnostic_model_metrics.csv,421,final,csv_evidence
+outputs/final/diagnostic_odds_ratios.csv,8254,final,csv_evidence
+outputs/final/fairness_feature_gaps_original.csv,400,final,csv_evidence
+outputs/final/fairness_summary.csv,173,final,csv_evidence
+outputs/final/feature_inventory.csv,225,final,csv_evidence
+outputs/final/model_comparison.csv,1641,final,csv_evidence
+outputs/final/portfolio_baseline.csv,273,final,csv_evidence
+outputs/final/psi_feature_summary.csv,1272,final,csv_evidence
+outputs/final/psi_summary.csv,97,final,csv_evidence
+outputs/final/sensitivity_performance.csv,143,final,csv_evidence
+outputs/final/shap_importance.csv,1369,final,csv_evidence

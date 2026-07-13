@@ -5,6 +5,7 @@ Chạy phân tích đầy đủ trên raw data + final table
 Output: bảng số liệu thật để presentation
 """
 import sys, warnings
+import os
 sys.stdout.reconfigure(encoding="utf-8")
 warnings.filterwarnings("ignore")
 
@@ -13,10 +14,11 @@ import pandas as pd
 from pathlib import Path
 from collections import defaultdict
 
-RAW  = Path(r"D:\Code\DA\1\clean_pipeline\data\raw")
-FINAL = Path(r"D:\Code\DA\1\step4_outputs\data\final_customer_analysis_train.csv.gz")
-OUT   = Path(r"D:\Code\DA\1\step3_deep_outputs")
-OUT.mkdir(exist_ok=True)
+PROJECT_ROOT = Path(os.environ.get("CREDIT_RISK_PROJECT_DIR", Path(__file__).resolve().parents[1]))
+RAW = PROJECT_ROOT / "data" / "raw"
+FINAL = PROJECT_ROOT / "data" / "processed" / "final_customer_analysis_train.csv.gz"
+OUT = PROJECT_ROOT / "outputs" / "tables" / "step03_deep_analysis"
+OUT.mkdir(parents=True, exist_ok=True)
 
 print("=" * 70)
 print("STEP 3 — DEEP DATA QUALITY ANALYSIS")

@@ -1,0 +1,4 @@
+metric_id,value_numeric,value_display,source_note
+labeled_rows,307511,"307,511",application_train labeled population
+final_master_columns,271,271,customer-level master table width
+portfolio_default_rate,0.08072881945686496,8.07%,TARGET=1 baseline in labeled population

@@ -1,0 +1,2 @@
+model_name,runtime_seconds,n,event_rate,roc_auc,gini,pr_auc,log_loss,brier_score,ks,...,lift_at_top_5pct,precision_at_top_10pct,recall_at_top_10pct,lift_at_top_10pct,precision_at_top_20pct,recall_at_top_20pct,lift_at_top_20pct,precision_at_top_30pct,recall_at_top_30pct,lift_at_top_30pct
+LightGBM v3,194.34636,61504,0.093701,0.790659,0.581317,0.312742,0.260499,0.074275,0.437227,...,4.493018,0.342709,0.365782,3.65746,0.265588,0.566892,2.834415,0.215857,0.691133,2.303677

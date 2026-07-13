@@ -12,17 +12,21 @@ This file documents where each headline portfolio metric comes from. The goal is
 
 | Group | Source files |
 |---|---|
-| Data volume and feature count | `outputs/tables/step08_ml/16_full_271_feature_inventory.csv` |
-| Step 8 data split | `outputs/tables/step08_ml/extracted_tables/v3_advanced_cell06_out02_table01.csv` |
-| ML benchmark | `outputs/tables/step08_ml/extracted_tables/v3_advanced_cell09_out04_table01.csv`, `v3_advanced_cell16_out01_table01.csv` |
-| Cross-validation | `outputs/tables/step08_ml/extracted_tables/v3_advanced_cell11_out14_table01.csv` |
-| Decision bands | `outputs/tables/step08_ml/extracted_tables/v3_advanced_cell12_out01_table01.csv` |
-| Diagnostic Logistic Regression | `outputs/tables/step08_ml/12_core_interpretable_logit_model_metrics.csv`, `13_core_interpretable_logit_odds_ratio_with_ci_pvalue.csv` |
-| SHAP explainability | `outputs/tables/step08_ml/extracted_tables/v3_advanced_cell16_out09_table01.csv` |
+| Data volume and feature count | `outputs/final/portfolio_baseline.csv`, `outputs/final/feature_inventory.csv` |
+| Step 8 data split | `outputs/final/data_split_report.csv` |
+| Champion model | `outputs/final/champion_validation_metrics.csv` |
+| Challenger benchmark | `outputs/final/model_comparison.csv` |
+| Cross-validation | `outputs/final/cross_validation_metrics.csv` |
+| Review-priority bands | `outputs/final/decision_bands.csv` |
+| Dashboard rule-based segments | `outputs/final/dashboard_rule_segments.csv` |
+| Diagnostic Logistic Regression | `outputs/final/diagnostic_model_metrics.csv`, `outputs/final/diagnostic_odds_ratios.csv` |
+| SHAP explainability | `outputs/final/shap_importance.csv` |
 
 ## Interpretation Guardrails
 
 - The LightGBM and ensemble metrics are validation metrics for risk ranking and prioritization, not an automated rejection policy.
+- The champion single model is LightGBM v3. The weighted ensemble is retained as a calibrated challenger/benchmark.
 - The Logistic Regression metrics and odds ratios are used for diagnostic interpretation, not as the strongest predictive model.
+- Dashboard default-rate/lift segments and Logistic Regression odds ratios are different metric families and should not be substituted for one another.
 - Raw Kaggle CSV files are intentionally not committed. The processed train/test/master files are committed with Git LFS for portfolio reproducibility.
 - The repository does not claim to be a production credit decisioning service. It is an end-to-end analytics and ML support project.

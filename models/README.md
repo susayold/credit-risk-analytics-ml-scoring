@@ -13,10 +13,10 @@ The project is an analytics and ML scoring support case study. It does not ship 
 
 | File | Purpose |
 |---|---|
-| `champion_model_card.json` | Machine-readable summary of the LightGBM/ensemble champion evidence |
-| `diagnostic_logit_model_card.json` | Machine-readable summary of the interpretable Logistic Regression evidence |
+| `champion_model_card.json` | Machine-readable summary of the LightGBM v3 champion and calibrated ensemble challenger |
+| `diagnostic_logit_model_card.json` | Machine-readable summary of the WOE-style Logistic Regression diagnostic benchmark |
 | `model_artifact_manifest.csv` | Paths to the committed evidence files used as model artifacts |
 
 ## Why No Binary Model Object
 
-The project is positioned for portfolio review and business analytics. The committed artifacts are enough to explain how the model was selected and evaluated. A production implementation would add a serialized model, encoder/preprocessor object, feature schema lock, monitoring jobs, and a serving API.
+The project is positioned for portfolio review and business analytics. The committed artifacts are enough to explain how the model was selected and evaluated. A production implementation would add a serialized model, encoder/preprocessor object, feature schema lock, monitoring jobs, approval policy, compliance controls, and a serving API.

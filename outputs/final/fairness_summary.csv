@@ -1,0 +1,4 @@
+group,original_gap,drop_occupation_organization,drop_occupation_organization_gender
+Occupation,0.268,0.238,0.229
+Organization,0.185,0.197,0.180
+Gender,0.048,0.049,0.030

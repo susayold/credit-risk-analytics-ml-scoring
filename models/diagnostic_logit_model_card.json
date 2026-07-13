@@ -1,8 +1,8 @@
 {
-  "model_card_version": "1.0",
+  "model_card_version": "1.1",
   "project": "Credit Risk Analytics & ML Scoring Pipeline",
   "model_role": "Interpretable diagnostic model and risk-driver explanation",
-  "model_family": "Logistic Regression",
+  "model_family": "WOE-style Logistic Regression Benchmark",
   "training_population": {
     "n_effective": 307511,
     "target": "TARGET",
@@ -39,11 +39,12 @@
     }
   ],
   "source_files": [
-    "outputs/tables/step08_ml/12_core_interpretable_logit_model_metrics.csv",
-    "outputs/tables/step08_ml/13_core_interpretable_logit_odds_ratio_with_ci_pvalue.csv"
+    "outputs/final/diagnostic_model_metrics.csv",
+    "outputs/final/diagnostic_odds_ratios.csv"
   ],
   "limitations": [
     "Used for explanation, not as the strongest predictive benchmark.",
-    "High VIF and correlated raw monetary variables are handled through ratios, bins, and interpretation guardrails."
+    "High VIF and correlated raw monetary variables are handled through ratios, bins, and interpretation guardrails.",
+    "This is not a complete regulatory scorecard because it does not include score scaling, PDO, base odds, point allocation, or reason-code production logic."
   ]
 }

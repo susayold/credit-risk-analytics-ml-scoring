@@ -1,0 +1,4 @@
+decision,customers,customer_share,default_rate,avg_score,defaults,presentation_label,decision_scope
+AUTO_APPROVE,43324,0.704409,0.041778,0.036884,1810,LOW_PRIORITY_REVIEW,"Illustrative review-priority bands, not production approval rules."
+MANUAL_REVIEW,12024,0.195499,0.154025,0.149258,1852,MANUAL_REVIEW,"Illustrative review-priority bands, not production approval rules."
+STRICT_REVIEW_OR_REJECT,6156,0.100091,0.341293,0.356415,2101,ENHANCED_REVIEW,"Illustrative review-priority bands, not production approval rules."

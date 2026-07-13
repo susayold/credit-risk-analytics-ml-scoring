@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """STEP 2 — DEEP ANALYSIS: ERD, grain, cardinality, coverage, raw-merge explosion."""
+import os
 import sys, warnings, csv
 sys.stdout.reconfigure(encoding="utf-8")
 warnings.filterwarnings("ignore")
 import numpy as np, pandas as pd
 from pathlib import Path
 
-RAW = Path(r"D:\Code\DA\1\clean_pipeline\data\raw")
-OUT = Path(r"D:\Code\DA\1\step2_deep_outputs"); OUT.mkdir(exist_ok=True)
+PROJECT_ROOT = Path(os.environ.get("CREDIT_RISK_PROJECT_DIR", Path(__file__).resolve().parents[1]))
+RAW = PROJECT_ROOT / "data" / "raw"
+OUT = PROJECT_ROOT / "outputs" / "tables" / "step02_data_understanding"; OUT.mkdir(parents=True, exist_ok=True)
 
 FILES = {
     "application_train":"application_train.csv","application_test":"application_test.csv",

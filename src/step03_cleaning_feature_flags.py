@@ -3,6 +3,7 @@ import json
 import zipfile
 import base64
 import warnings
+import os
 from pathlib import Path
 from collections import Counter, defaultdict
 
@@ -21,12 +22,10 @@ sns.set_theme(style="whitegrid", palette="Set2")
 # CONFIG
 # ============================================================
 
-DATA_PATH = Path(r"D:\Code\DA\1")
+PROJECT_ROOT = Path(os.environ.get("CREDIT_RISK_PROJECT_DIR", Path(__file__).resolve().parents[1]))
+DATA_PATH = PROJECT_ROOT / "data" / "raw"
 
-# If running locally, use:
-# DATA_PATH = Path(r"C:\Users\sangk\Downloads")
-
-OUT_PATH = DATA_PATH / "step3_outputs"
+OUT_PATH = PROJECT_ROOT / "outputs" / "tables" / "step03_cleaning_feature_flags"
 FIG_PATH = OUT_PATH / "figures"
 TABLE_PATH = OUT_PATH / "tables"
 

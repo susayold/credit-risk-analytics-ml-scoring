@@ -1,0 +1,2 @@
+model,n_effective,n_parameters,converged,log_likelihood,aic,bic,roc_auc,pr_auc,log_loss,brier_score,lift_at_10pct,top_10pct_default_rate,p_value_missing_count,ci_missing_cell_count
+D7_core_interpretable_logit_with_valid_ci_pvalue,307511,52,True,-81529.0510848233,163162.1021696466,163715.18800881982,0.6772320456135935,0.1639739576440586,0.26512564130981764,0.0715659779443171,2.4656676354657554,0.1990504373841501,0,0
