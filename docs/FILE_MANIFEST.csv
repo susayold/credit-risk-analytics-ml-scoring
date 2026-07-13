@@ -1,6 +1,6 @@
 relative_path,size_mb,artifact_type,status
 .gitattributes,0.0003,project_file,support
-.github/workflows/repository-checks.yml,0.0004,project_file,support
+.github/workflows/repository-checks.yml,0.0005,project_file,support
 .gitignore,0.0011,project_file,support
 dashboard/dashboard.pbix,115.8878,dashboard,final
 dashboard/dashboard.pdf,1.1699,dashboard,final
@@ -15,7 +15,10 @@ data/processed/final_customer_analysis_table.csv.gz,132.7322,processed_data,fina
 data/processed/final_customer_analysis_test.csv.gz,18.9545,processed_data,final
 data/processed/final_customer_analysis_train.csv.gz,113.7807,processed_data,final
 data/raw/README.md,0.0004,project_file,support
-docs/CHAMPION_RUN_ENVIRONMENT.md,0.0023,documentation,final
+data/splits/calibration_ids.csv,0.4692,model_split_ids,final
+data/splits/final_validation_ids.csv,0.5866,model_split_ids,final
+data/splits/fit_train_ids.csv,1.8769,model_split_ids,final
+docs/CHAMPION_RUN_ENVIRONMENT.md,0.0027,documentation,final
 docs/FILE_SUMMARY_BY_EXTENSION.csv,0.0003,documentation,final
 docs/MANIFEST_SQL.csv,0.0012,documentation,final
 docs/METRICS_SOURCE_OF_TRUTH.csv,0.0071,documentation,final
@@ -399,7 +402,7 @@ outputs/tables/step08_ml/extracted_tables/v3_advanced_cell16_out09_table01.csv,0
 outputs/tables/step08_ml/extracted_tables/v3_advanced_cell16_out12_table01.csv,0.0005,step_output,evidence
 outputs/tables/step08_ml/extracted_tables/v3_advanced_cell16_out14_table01.csv,0.0001,step_output,evidence
 outputs/tables/step08_ml/from_kaggle_notebooks/extracted_images_manifest.csv,0.0018,step_output,evidence
-README.md,0.0073,project_file,support
+README.md,0.0076,project_file,support
 reports/credit_risk_code_by_subsection.docx,4.6118,project_file,support
 reports/credit_risk_final_presentation.pptx,4.197,project_file,support
 reports/credit_risk_full_report.pdf,5.5319,project_file,support
@@ -466,6 +469,6 @@ src/step04_descriptive_correlation_full_original.py,0.0258,code,source
 src/step04_descriptive_from_processed.py,0.0037,code,source
 src/step05_build_master_table.py,0.0376,code,source
 src/step07_diagnostic_analytics.py,0.1613,code,source
-src/step08_train_champion_v3.py,0.0201,code,source
-tests/test_repository_contract.py,0.0084,code,source
+src/step08_train_champion_v3.py,0.0223,code,source
+tests/test_repository_contract.py,0.0106,code,source
 tools/create_portfolio_pdf.py,0.0473,project_file,support

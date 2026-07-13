@@ -11,9 +11,10 @@ Two modes are available:
 
 2. train
    Retrains a LightGBM v3-style champion from the processed customer-level
-   table, then exports validation, calibration, PSI, SHAP, fairness and
-   decision-band tables. Exact metrics can vary with library versions and
-   hardware; the committed evidence tables remain the published source of truth.
+   table, then exports validation, calibration, score-distribution shift, SHAP,
+   fairness and decision-band tables. Exact metrics can vary with library
+   versions and hardware; the committed evidence tables remain the published
+   source of truth.
 """
 
 from __future__ import annotations
@@ -34,6 +35,7 @@ from typing import Iterable
 
 PROJECT_ROOT = Path(os.environ.get("CREDIT_RISK_PROJECT_DIR", Path(__file__).resolve().parents[1]))
 OUTPUT_FINAL = PROJECT_ROOT / "outputs" / "final"
+SPLIT_DIR = PROJECT_ROOT / "data" / "splits"
 
 RANDOM_STATE = 42
 TARGET = "TARGET"
@@ -56,6 +58,13 @@ EVIDENCE = {
     "diagnostic_or": PROJECT_ROOT / "outputs/tables/step08_ml/13_core_interpretable_logit_odds_ratio_with_ci_pvalue.csv",
     "dashboard_segments": PROJECT_ROOT / "outputs/tables/step07_diagnostic/segment_risk_index_all_variables.csv",
 }
+
+
+def display_path(path: Path) -> str:
+    try:
+        return path.relative_to(PROJECT_ROOT).as_posix()
+    except ValueError:
+        return path.as_posix()
 
 
 def configure_logging() -> None:
@@ -83,13 +92,13 @@ def write_rows(path: Path, rows: Iterable[dict[str, object]], fieldnames: list[s
         writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
-    logging.info("Wrote %s", path.relative_to(PROJECT_ROOT))
+    logging.info("Wrote %s", display_path(path))
 
 
 def copy_csv(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(src, dst)
-    logging.info("Wrote %s", dst.relative_to(PROJECT_ROOT))
+    logging.info("Wrote %s", display_path(dst))
 
 
 def select_one(rows: list[dict[str, str]], column: str, value: str) -> dict[str, str]:
@@ -109,7 +118,7 @@ def rename_scorecard_label(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     return renamed
 
 
-def export_portfolio_baseline() -> None:
+def export_portfolio_baseline(output_dir: Path = OUTPUT_FINAL) -> None:
     row = read_rows(EVIDENCE["feature_inventory"])[0]
     rows = [
         {
@@ -131,10 +140,10 @@ def export_portfolio_baseline() -> None:
             "source_note": "TARGET=1 baseline in labeled population",
         },
     ]
-    write_rows(OUTPUT_FINAL / "portfolio_baseline.csv", rows)
+    write_rows(output_dir / "portfolio_baseline.csv", rows)
 
 
-def export_dashboard_rule_segments() -> None:
+def export_dashboard_rule_segments(output_dir: Path = OUTPUT_FINAL) -> None:
     source_rows = read_rows(EVIDENCE["dashboard_segments"])
     keys = {
         ("DIAG_CC_UTILIZATION_GROUP", ">100%"),
@@ -146,10 +155,10 @@ def export_dashboard_rule_segments() -> None:
         for row in source_rows
         if (row.get("variable"), row.get("segment")) in keys
     ]
-    write_rows(OUTPUT_FINAL / "dashboard_rule_segments.csv", rows)
+    write_rows(output_dir / "dashboard_rule_segments.csv", rows)
 
 
-def export_decision_bands() -> None:
+def export_decision_bands(output_dir: Path = OUTPUT_FINAL) -> None:
     label_map = {
         "AUTO_APPROVE": "LOW_PRIORITY_REVIEW",
         "MANUAL_REVIEW": "MANUAL_REVIEW",
@@ -161,11 +170,11 @@ def export_decision_bands() -> None:
         out["presentation_label"] = label_map.get(out["decision"], out["decision"])
         out["decision_scope"] = "Illustrative review-priority bands, not production approval rules."
         rows.append(out)
-    write_rows(OUTPUT_FINAL / "decision_bands.csv", rows)
+    write_rows(output_dir / "decision_bands.csv", rows)
 
 
-def export_fairness_and_sensitivity() -> None:
-    copy_csv(EVIDENCE["fairness"], OUTPUT_FINAL / "fairness_feature_gaps_original.csv")
+def export_fairness_and_sensitivity(output_dir: Path = OUTPUT_FINAL) -> None:
+    copy_csv(EVIDENCE["fairness"], output_dir / "fairness_feature_gaps_original.csv")
     sensitivity_rows = [
         {"version": "Original", "roc_auc": "0.7838", "delta_auc": "0"},
         {"version": "Drop occupation/organization", "roc_auc": "0.7835", "delta_auc": "-0.0003"},
@@ -176,48 +185,48 @@ def export_fairness_and_sensitivity() -> None:
         {"group": "Organization", "original_gap": "0.185", "drop_occupation_organization": "0.197", "drop_occupation_organization_gender": "0.180"},
         {"group": "Gender", "original_gap": "0.048", "drop_occupation_organization": "0.049", "drop_occupation_organization_gender": "0.030"},
     ]
-    write_rows(OUTPUT_FINAL / "sensitivity_performance.csv", sensitivity_rows)
-    write_rows(OUTPUT_FINAL / "fairness_summary.csv", fairness_summary_rows)
+    write_rows(output_dir / "sensitivity_performance.csv", sensitivity_rows)
+    write_rows(output_dir / "fairness_summary.csv", fairness_summary_rows)
 
 
-def export_evidence_outputs() -> None:
-    OUTPUT_FINAL.mkdir(parents=True, exist_ok=True)
-    export_portfolio_baseline()
-    copy_csv(EVIDENCE["feature_inventory"], OUTPUT_FINAL / "feature_inventory.csv")
-    copy_csv(EVIDENCE["data_split"], OUTPUT_FINAL / "data_split_report.csv")
+def export_evidence_outputs(output_dir: Path = OUTPUT_FINAL) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    export_portfolio_baseline(output_dir)
+    copy_csv(EVIDENCE["feature_inventory"], output_dir / "feature_inventory.csv")
+    copy_csv(EVIDENCE["data_split"], output_dir / "data_split_report.csv")
 
     holdout_rows = read_rows(EVIDENCE["holdout_models"])
     champion = select_one(holdout_rows, "model_name", "LightGBM v3")
-    write_rows(OUTPUT_FINAL / "champion_validation_metrics.csv", [champion])
+    write_rows(output_dir / "champion_validation_metrics.csv", [champion])
 
     comparison_rows = rename_scorecard_label(read_rows(EVIDENCE["final_model_comparison"]))
-    write_rows(OUTPUT_FINAL / "model_comparison.csv", comparison_rows)
-    copy_csv(EVIDENCE["cv_models"], OUTPUT_FINAL / "cross_validation_metrics.csv")
-    export_decision_bands()
-    copy_csv(EVIDENCE["psi_summary"], OUTPUT_FINAL / "psi_summary.csv")
-    copy_csv(EVIDENCE["psi_features"], OUTPUT_FINAL / "psi_feature_summary.csv")
-    export_fairness_and_sensitivity()
-    copy_csv(EVIDENCE["shap"], OUTPUT_FINAL / "shap_importance.csv")
-    copy_csv(EVIDENCE["diagnostic_metrics"], OUTPUT_FINAL / "diagnostic_model_metrics.csv")
-    copy_csv(EVIDENCE["diagnostic_or"], OUTPUT_FINAL / "diagnostic_odds_ratios.csv")
-    export_dashboard_rule_segments()
-    write_final_manifest()
+    write_rows(output_dir / "model_comparison.csv", comparison_rows)
+    copy_csv(EVIDENCE["cv_models"], output_dir / "cross_validation_metrics.csv")
+    export_decision_bands(output_dir)
+    copy_csv(EVIDENCE["psi_summary"], output_dir / "psi_summary.csv")
+    copy_csv(EVIDENCE["psi_features"], output_dir / "psi_feature_summary.csv")
+    export_fairness_and_sensitivity(output_dir)
+    copy_csv(EVIDENCE["shap"], output_dir / "shap_importance.csv")
+    copy_csv(EVIDENCE["diagnostic_metrics"], output_dir / "diagnostic_model_metrics.csv")
+    copy_csv(EVIDENCE["diagnostic_or"], output_dir / "diagnostic_odds_ratios.csv")
+    export_dashboard_rule_segments(output_dir)
+    write_final_manifest(output_dir)
 
 
-def write_final_manifest() -> None:
+def write_final_manifest(output_dir: Path = OUTPUT_FINAL) -> None:
     rows = []
-    for path in sorted(OUTPUT_FINAL.glob("*.csv")):
+    for path in sorted(output_dir.glob("*.csv")):
         if path.name == "final_outputs_manifest.csv":
             continue
         rows.append(
             {
-                "relative_path": path.relative_to(PROJECT_ROOT).as_posix(),
+                "relative_path": display_path(path),
                 "size_bytes": path.stat().st_size,
                 "status": "final",
                 "artifact_type": "csv_evidence",
             }
         )
-    write_rows(OUTPUT_FINAL / "final_outputs_manifest.csv", rows)
+    write_rows(output_dir / "final_outputs_manifest.csv", rows)
 
 
 def require_train_dependencies() -> None:
@@ -235,16 +244,69 @@ def require_train_dependencies() -> None:
         )
 
 
+def load_published_split_frames(df, split_dir: Path = SPLIT_DIR):
+    import pandas as pd
+
+    split_files = {
+        "fit_train": split_dir / "fit_train_ids.csv",
+        "calibration": split_dir / "calibration_ids.csv",
+        "final_validation": split_dir / "final_validation_ids.csv",
+    }
+    missing = [str(path) for path in split_files.values() if not path.exists()]
+    if missing:
+        raise FileNotFoundError(
+            "Missing committed Step 8 split ID files: "
+            + ", ".join(missing)
+            + ". The train mode requires fixed split IDs to reproduce the published split counts."
+        )
+
+    keyed = df.set_index(ID_COL, drop=False)
+    frames = {}
+    seen_ids: set[int] = set()
+    for split_name, path in split_files.items():
+        split_ids = pd.read_csv(path)
+        required_cols = {ID_COL, TARGET}
+        if not required_cols.issubset(split_ids.columns):
+            raise ValueError(f"{path} must contain {sorted(required_cols)}")
+        ids = split_ids[ID_COL].astype(int).tolist()
+        if len(ids) != len(set(ids)):
+            raise ValueError(f"{path} contains duplicate {ID_COL} values")
+        overlap = seen_ids.intersection(ids)
+        if overlap:
+            raise ValueError(f"Split ID overlap detected in {split_name}: {len(overlap)} duplicate IDs")
+        seen_ids.update(ids)
+        missing_ids = sorted(set(ids).difference(keyed.index.astype(int)))
+        if missing_ids:
+            raise ValueError(f"{path} contains IDs not found in processed train data; first missing ID: {missing_ids[0]}")
+
+        part = keyed.loc[ids].reset_index(drop=True)
+        expected_target = split_ids[TARGET].astype(int).reset_index(drop=True)
+        actual_target = part[TARGET].astype(int).reset_index(drop=True)
+        if not actual_target.equals(expected_target):
+            raise ValueError(f"{path} TARGET values do not match processed train data")
+        frames[split_name] = part
+
+    if len(seen_ids) != len(df):
+        raise ValueError(f"Split files cover {len(seen_ids):,} IDs, but processed train has {len(df):,} rows")
+    return frames
+
+
+def split_xy(frame):
+    y = frame[TARGET].astype(int)
+    X = frame.drop(columns=[TARGET])
+    if ID_COL in X.columns:
+        X = X.drop(columns=[ID_COL])
+    return X, y
+
+
 def run_train_mode(train_file: Path, test_file: Path, output_dir: Path) -> None:
     require_train_dependencies()
 
-    import numpy as np
     import pandas as pd
     from lightgbm import LGBMClassifier
     from scipy.stats import ks_2samp
     from sklearn.calibration import CalibratedClassifierCV
-    from sklearn.metrics import average_precision_score, brier_score_loss, log_loss, roc_auc_score
-    from sklearn.model_selection import StratifiedShuffleSplit
+    from sklearn.frozen import FrozenEstimator
 
     output_dir.mkdir(parents=True, exist_ok=True)
     started = time.time()
@@ -254,20 +316,10 @@ def run_train_mode(train_file: Path, test_file: Path, output_dir: Path) -> None:
         raise ValueError(f"{TARGET} column is required in {train_file}")
 
     df = add_v3_features(df)
-    y = df[TARGET].astype(int)
-    X = df.drop(columns=[TARGET])
-    if ID_COL in X.columns:
-        X = X.drop(columns=[ID_COL])
-
-    split1 = StratifiedShuffleSplit(n_splits=1, test_size=VALIDATION_ROWS, random_state=RANDOM_STATE)
-    fit_cal_idx, val_idx = next(split1.split(X, y))
-    X_fit_cal, X_val = X.iloc[fit_cal_idx].copy(), X.iloc[val_idx].copy()
-    y_fit_cal, y_val = y.iloc[fit_cal_idx].copy(), y.iloc[val_idx].copy()
-
-    split2 = StratifiedShuffleSplit(n_splits=1, test_size=CALIBRATION_ROWS, random_state=RANDOM_STATE)
-    fit_idx, cal_idx = next(split2.split(X_fit_cal, y_fit_cal))
-    X_fit, X_cal = X_fit_cal.iloc[fit_idx].copy(), X_fit_cal.iloc[cal_idx].copy()
-    y_fit, y_cal = y_fit_cal.iloc[fit_idx].copy(), y_fit_cal.iloc[cal_idx].copy()
+    split_frames = load_published_split_frames(df, SPLIT_DIR)
+    X_fit, y_fit = split_xy(split_frames["fit_train"])
+    X_cal, y_cal = split_xy(split_frames["calibration"])
+    X_val, y_val = split_xy(split_frames["final_validation"])
 
     data_split_rows = [
         {"split": "fit_train", "rows": len(X_fit), "default_rate": float(y_fit.mean())},
@@ -303,7 +355,7 @@ def run_train_mode(train_file: Path, test_file: Path, output_dir: Path) -> None:
     )
     model.fit(X_fit, y_fit, eval_set=[(X_cal, y_cal)], eval_metric="auc")
 
-    calibrator = CalibratedClassifierCV(model, method="sigmoid", cv="prefit")
+    calibrator = CalibratedClassifierCV(FrozenEstimator(model), method="sigmoid")
     calibrator.fit(X_cal, y_cal)
     raw_score = model.predict_proba(X_val)[:, 1]
     cal_score = calibrator.predict_proba(X_val)[:, 1]
@@ -312,10 +364,10 @@ def run_train_mode(train_file: Path, test_file: Path, output_dir: Path) -> None:
     write_rows(output_dir / "data_split_report.csv", data_split_rows)
     write_rows(output_dir / "champion_validation_metrics.csv", [champion_row])
     write_rows(output_dir / "decision_bands.csv", build_decision_bands(y_val.to_numpy(), cal_score))
-    write_rows(output_dir / "psi_summary.csv", build_score_psi(raw_score, cal_score))
+    write_rows(output_dir / "calibration_score_distribution_shift.csv", build_score_distribution_shift(raw_score, cal_score))
     write_rows(output_dir / "fairness_summary.csv", build_fairness_rows(X_val, y_val.to_numpy(), cal_score))
     write_rows(output_dir / "shap_importance.csv", build_shap_rows(model, X_val))
-    write_final_manifest()
+    write_final_manifest(output_dir)
 
 
 def add_v3_features(df):
@@ -424,7 +476,7 @@ def build_decision_bands(y_true, score) -> list[dict[str, object]]:
     return rows
 
 
-def build_score_psi(reference_score, comparison_score, bins: int = 10) -> list[dict[str, object]]:
+def build_score_distribution_shift(reference_score, comparison_score, bins: int = 10) -> list[dict[str, object]]:
     import numpy as np
     import pandas as pd
 
@@ -432,13 +484,13 @@ def build_score_psi(reference_score, comparison_score, bins: int = 10) -> list[d
     comparison_score = np.asarray(comparison_score, dtype=float)
     edges = np.unique(np.quantile(reference_score, np.linspace(0, 1, bins + 1)))
     if len(edges) < 3:
-        return [{"psi_type": "score_reference_vs_comparison", "psi": 0.0}]
+        return [{"shift_type": "raw_vs_calibrated_score_shift", "score_distribution_shift_index": 0.0}]
     ref_bins = pd.cut(reference_score, edges, include_lowest=True, duplicates="drop")
     cmp_bins = pd.cut(comparison_score, edges, include_lowest=True, duplicates="drop")
     ref_pct = ref_bins.value_counts(normalize=True, sort=False).replace(0, 1e-6)
     cmp_pct = cmp_bins.value_counts(normalize=True, sort=False).replace(0, 1e-6)
-    psi = float(((cmp_pct - ref_pct) * np.log(cmp_pct / ref_pct)).sum())
-    return [{"psi_type": "score_raw_vs_platt_calibrated", "psi": psi}]
+    shift_index = float(((cmp_pct - ref_pct) * np.log(cmp_pct / ref_pct)).sum())
+    return [{"shift_type": "raw_vs_calibrated_score_shift", "score_distribution_shift_index": shift_index}]
 
 
 def build_fairness_rows(X, y_true, score) -> list[dict[str, object]]:
@@ -496,7 +548,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.mode == "evidence":
-        export_evidence_outputs()
+        export_evidence_outputs(args.output_dir)
     else:
         run_train_mode(args.train_file, args.test_file, args.output_dir)
 

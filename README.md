@@ -82,10 +82,16 @@ For stricter reproducibility:
 pip install -r requirements-lock.txt
 ```
 
-3. Run the full local pipeline:
+3. Run the full evidence and analytics pipeline:
 
 ```bash
 python run_pipeline.py --stage all
+```
+
+By default, the ML stage rebuilds the committed evidence tables. To retrain the LightGBM v3-style model from the processed train table, add `--retrain-ml`:
+
+```bash
+python run_pipeline.py --stage all --skip-master --retrain-ml
 ```
 
 Common stage commands:
@@ -111,7 +117,7 @@ python src/step08_train_champion_v3.py --mode evidence
 python src/step08_train_champion_v3.py --mode train
 ```
 
-`--mode evidence` rebuilds canonical `outputs/final/*.csv` from committed evidence tables. `--mode train` retrains the LightGBM v3-style champion from the processed customer-level table.
+`--mode evidence` rebuilds canonical `outputs/final/*.csv` from committed evidence tables. `--mode train` retrains the LightGBM v3-style champion from the processed customer-level table using committed split IDs in `data/splits/`.
 
 ## Run the Portfolio Website
 

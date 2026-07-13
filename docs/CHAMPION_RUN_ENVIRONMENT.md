@@ -27,6 +27,14 @@ Exact retraining metrics can vary with package versions and hardware. The publis
 
 ## Split Design
 
+The retraining script reads committed split ID files instead of creating a new stratified split at runtime:
+
+- `data/splits/fit_train_ids.csv`
+- `data/splits/calibration_ids.csv`
+- `data/splits/final_validation_ids.csv`
+
+This keeps the published split sizes and target rates reproducible. A fresh stratified split would push the validation default rate closer to the full portfolio baseline of 8.07%, while the published validation holdout is 9.37%.
+
 | Split | Rows | Purpose |
 |---|---:|---|
 | Fit train | 196,805 | Train LightGBM and related models |

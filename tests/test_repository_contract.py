@@ -3,6 +3,7 @@ import json
 import math
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -136,6 +137,24 @@ class RepositoryContractTests(unittest.TestCase):
         for row in read_csv_rows(ROOT / "outputs" / "final" / "final_outputs_manifest.csv"):
             self.assertTrue((ROOT / row["relative_path"]).exists(), row["relative_path"])
 
+    def test_step08_split_ids_match_published_split_rates(self):
+        expected = {
+            "fit_train_ids.csv": (196805, 0.0774878687025228),
+            "calibration_ids.csv": (49202, 0.07747652534449818),
+            "final_validation_ids.csv": (61504, 0.09370122268470343),
+        }
+        all_ids: set[str] = set()
+        for filename, (expected_rows, expected_rate) in expected.items():
+            rows = read_csv_rows(ROOT / "data" / "splits" / filename)
+            self.assertEqual(len(rows), expected_rows, filename)
+            ids = [row["SK_ID_CURR"] for row in rows]
+            self.assertEqual(len(ids), len(set(ids)), filename)
+            self.assertTrue(all(id_ not in all_ids for id_ in ids), filename)
+            all_ids.update(ids)
+            default_rate = sum(int(float(row["TARGET"])) for row in rows) / len(rows)
+            self.assertTrue(math.isclose(default_rate, expected_rate, rel_tol=0, abs_tol=1e-12), filename)
+        self.assertEqual(len(all_ids), 307511)
+
     def test_sql_pipeline_scripts_are_present(self):
         expected = [
             "01_create_base_application.sql",
@@ -165,6 +184,36 @@ class RepositoryContractTests(unittest.TestCase):
         )
         self.assertIn("--stage", result.stdout)
         self.assertIn("--retrain-ml", result.stdout)
+
+    def test_step08_script_uses_fixed_splits_and_current_calibration_api(self):
+        text = (ROOT / "src" / "step08_train_champion_v3.py").read_text(encoding="utf-8")
+        self.assertIn("load_published_split_frames", text)
+        self.assertIn("FrozenEstimator(model)", text)
+        self.assertNotIn('cv="prefit"', text)
+        self.assertNotIn("StratifiedShuffleSplit", text)
+
+    def test_step08_evidence_respects_output_dir(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir) / "evidence"
+            subprocess.run(
+                [
+                    sys.executable,
+                    "src/step08_train_champion_v3.py",
+                    "--mode",
+                    "evidence",
+                    "--output-dir",
+                    str(out_dir),
+                ],
+                cwd=ROOT,
+                check=True,
+                text=True,
+                capture_output=True,
+            )
+            manifest = out_dir / "final_outputs_manifest.csv"
+            self.assertTrue(manifest.exists())
+            manifest_rows = read_csv_rows(manifest)
+            self.assertGreaterEqual(len(manifest_rows), 10)
+            self.assertTrue((out_dir / "champion_validation_metrics.csv").exists())
 
     def test_no_personal_absolute_paths_in_text_artifacts(self):
         blocked = ["D:/Code" + "/DA", "D:" + "\\Code\\DA", "C:" + "\\Users"]
