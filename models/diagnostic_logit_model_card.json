@@ -1,0 +1,49 @@
+{
+  "model_card_version": "1.0",
+  "project": "Credit Risk Analytics & ML Scoring Pipeline",
+  "model_role": "Interpretable diagnostic model and risk-driver explanation",
+  "model_family": "Logistic Regression",
+  "training_population": {
+    "n_effective": 307511,
+    "target": "TARGET",
+    "positive_class": "TARGET = 1"
+  },
+  "model_fit": {
+    "n_parameters": 52,
+    "converged": true,
+    "roc_auc": 0.6772320456135935,
+    "pr_auc": 0.1639739576440586,
+    "log_loss": 0.26512564130981764,
+    "brier_score": 0.0715659779443171,
+    "lift_at_10pct": 2.4656676354657554,
+    "top_10pct_default_rate": 0.1990504373841501
+  },
+  "selected_odds_ratio_drivers": [
+    {
+      "term": "D7_CC_UTILIZATION_GROUP_>100%",
+      "odds_ratio": 3.500169943118824,
+      "ci95_low": 3.0058008688357494,
+      "ci95_high": 4.075848722293351
+    },
+    {
+      "term": "D7_BUREAU_DEBT_CREDIT_GROUP_>100%",
+      "odds_ratio": 2.8602700325744697,
+      "ci95_low": 2.489994149927604,
+      "ci95_high": 3.285607984051458
+    },
+    {
+      "term": "D7_AGE_GROUP_<=30",
+      "odds_ratio": 2.4664106001191937,
+      "ci95_low": 2.3269158712546303,
+      "ci95_high": 2.6142678055225015
+    }
+  ],
+  "source_files": [
+    "outputs/tables/step08_ml/12_core_interpretable_logit_model_metrics.csv",
+    "outputs/tables/step08_ml/13_core_interpretable_logit_odds_ratio_with_ci_pvalue.csv"
+  ],
+  "limitations": [
+    "Used for explanation, not as the strongest predictive benchmark.",
+    "High VIF and correlated raw monetary variables are handled through ratios, bins, and interpretation guardrails."
+  ]
+}

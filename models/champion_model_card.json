@@ -1,0 +1,59 @@
+{
+  "model_card_version": "1.0",
+  "project": "Credit Risk Analytics & ML Scoring Pipeline",
+  "model_role": "Risk ranking and review prioritization",
+  "champion_family": "LightGBM / weighted ensemble benchmark",
+  "training_population": {
+    "labeled_rows": 307511,
+    "target": "TARGET",
+    "positive_class": "TARGET = 1",
+    "baseline_default_rate": 0.08072881945686496
+  },
+  "split": {
+    "fit_train_rows": 196805,
+    "calibration_rows": 49202,
+    "validation_rows": 61504,
+    "validation_default_rate": 0.093701
+  },
+  "headline_validation_metrics": {
+    "lightgbm_v3_roc_auc": 0.790659,
+    "lightgbm_v3_pr_auc": 0.312742,
+    "lightgbm_v3_ks": 0.437227,
+    "lightgbm_v3_lift_at_10pct": 3.65746,
+    "weighted_ensemble_roc_auc": 0.7907,
+    "weighted_ensemble_pr_auc": 0.312825,
+    "weighted_ensemble_lift_at_10pct": 3.64358,
+    "weighted_ensemble_top_30pct_default_capture": 0.690265,
+    "weighted_ensemble_top_30pct_lift": 2.300785
+  },
+  "cross_validation": {
+    "weighted_ensemble_leak_free_5fold_oof_auc": 0.797816,
+    "source_file": "outputs/tables/step08_ml/extracted_tables/v3_advanced_cell11_out14_table01.csv"
+  },
+  "decision_band_evidence": {
+    "auto_approve_default_rate": 0.041778,
+    "manual_review_default_rate": 0.154025,
+    "strict_review_default_rate": 0.341293,
+    "source_file": "outputs/tables/step08_ml/extracted_tables/v3_advanced_cell12_out01_table01.csv"
+  },
+  "top_explainability_signals": [
+    {
+      "feature": "V3_EXT_SOURCE_MEAN",
+      "mean_abs_shap": 0.128992
+    },
+    {
+      "feature": "V3_ANNUITY_CREDIT_RATIO",
+      "mean_abs_shap": 0.086301
+    },
+    {
+      "feature": "ORGANIZATION_TYPE",
+      "mean_abs_shap": 0.076106
+    }
+  ],
+  "source_of_truth": "docs/METRICS_SOURCE_OF_TRUTH.csv",
+  "limitations": [
+    "Used for ranking and prioritization, not automatic rejection.",
+    "Raw Kaggle source files are excluded from the repository.",
+    "Binary model object is not shipped because this is a portfolio analytics project, not a model-serving package."
+  ]
+}

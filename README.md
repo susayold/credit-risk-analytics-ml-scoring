@@ -100,4 +100,15 @@ Then open the local URL shown in the terminal. The website uses the actual dashb
 - Rule-based dashboard segments and ML score bands are separate analytical products and are labeled accordingly.
 - External score variables are powerful but partially black-box; fairness monitoring and human review remain necessary.
 
+## Reproducibility and Evidence
+
+- Headline metrics are mapped to committed source tables in [`docs/METRICS_SOURCE_OF_TRUTH.csv`](docs/METRICS_SOURCE_OF_TRUTH.csv).
+- The reproducibility scope and known limits are documented in [`docs/REPRODUCIBILITY_AUDIT.md`](docs/REPRODUCIBILITY_AUDIT.md).
+- Model evidence cards are stored in [`models/`](models/), including champion ranking metrics and diagnostic Logistic Regression evidence.
+- Lightweight repository contract tests validate that the headline metrics still match their source files:
+
+```bash
+python -m unittest discover -s tests -p "test_*.py"
+```
+
 See [`docs/PORTFOLIO_CASE_STUDY.md`](docs/PORTFOLIO_CASE_STUDY.md) for the full business interpretation and [`docs/SQL_TO_PYTHON_MAPPING.md`](docs/SQL_TO_PYTHON_MAPPING.md) for implementation traceability.

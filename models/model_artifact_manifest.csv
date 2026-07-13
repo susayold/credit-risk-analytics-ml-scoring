@@ -1,0 +1,15 @@
+artifact_type,file_path,purpose
+metric_source_of_truth,docs/METRICS_SOURCE_OF_TRUTH.csv,Single traceability table for headline metrics
+champion_model_card,models/champion_model_card.json,Machine-readable champion model evidence
+diagnostic_model_card,models/diagnostic_logit_model_card.json,Machine-readable diagnostic Logistic Regression evidence
+feature_inventory,outputs/tables/step08_ml/16_full_271_feature_inventory.csv,Final 271-column feature inventory and baseline
+split_report,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell06_out02_table01.csv,Fit/calibration/validation/test split sizes
+lightgbm_validation_metrics,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell09_out04_table01.csv,Champion single-model validation metrics
+final_model_comparison,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell16_out01_table01.csv,Final Step 8 model comparison
+cross_validation_metrics,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell11_out14_table01.csv,Leak-free 5-fold OOF benchmark
+decision_bands,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell12_out01_table01.csv,Auto-approve/manual-review/strict-review outcomes
+shap_global,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell16_out09_table01.csv,Global SHAP feature importance
+fairness_gap,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell15_out03_table01.csv,Fairness gap checks by sensitive/proxy groups
+psi_stability,outputs/tables/step08_ml/extracted_tables/v3_advanced_cell13_out02_table01.csv,Population stability by feature
+diagnostic_logit_metrics,outputs/tables/step08_ml/12_core_interpretable_logit_model_metrics.csv,Interpretable logit model metrics
+diagnostic_logit_odds_ratios,outputs/tables/step08_ml/13_core_interpretable_logit_odds_ratio_with_ci_pvalue.csv,Interpretable odds ratio drivers
