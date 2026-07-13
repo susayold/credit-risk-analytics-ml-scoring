@@ -1,4 +1,5 @@
 import csv
+import importlib.util
 import json
 import math
 import subprocess
@@ -6,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -189,8 +191,26 @@ class RepositoryContractTests(unittest.TestCase):
         text = (ROOT / "src" / "step08_train_champion_v3.py").read_text(encoding="utf-8")
         self.assertIn("load_published_split_frames", text)
         self.assertIn("FrozenEstimator(model)", text)
+        self.assertIn("prepare_lgbm_frames", text)
+        self.assertIn("median = fit[col].median()", text)
         self.assertNotIn('cv="prefit"', text)
         self.assertNotIn("StratifiedShuffleSplit", text)
+
+    def test_retrain_runner_writes_outside_canonical_final(self):
+        spec = importlib.util.spec_from_file_location("run_pipeline_for_test", ROOT / "run_pipeline.py")
+        module = importlib.util.module_from_spec(spec)
+        assert spec.loader is not None
+        spec.loader.exec_module(module)
+
+        with patch.object(module, "run_command") as mocked_run:
+            module.run_ml(retrain_ml=True)
+
+        stage, command = mocked_run.call_args.args
+        self.assertEqual(stage, "ml")
+        self.assertIn("--output-dir", command)
+        output_dir = command[command.index("--output-dir") + 1]
+        self.assertTrue(output_dir.endswith("outputs\\retrain\\latest") or output_dir.endswith("outputs/retrain/latest"))
+        self.assertNotIn(str(ROOT / "outputs" / "final"), command)
 
     def test_step08_evidence_respects_output_dir(self):
         with tempfile.TemporaryDirectory() as temp_dir:

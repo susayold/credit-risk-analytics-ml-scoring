@@ -16,7 +16,8 @@
     "calibration_rows": 49202,
     "validation_rows": 61504,
     "validation_default_rate": 0.093701,
-    "note": "Validation is a holdout from labeled application_train records, not an out-of-time validation sample."
+    "note": "Validation is a holdout from labeled application_train records, not an out-of-time validation sample.",
+    "event_rate_caveat": "The fixed validation holdout has a higher event rate than the overall portfolio. Ranking metrics remain suitable for comparison, while probability metrics and decision-band rates should be interpreted within the validation population rather than as portfolio-wide estimates."
   },
   "headline_validation_metrics": {
     "lightgbm_v3_roc_auc": 0.790659,

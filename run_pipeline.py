@@ -10,6 +10,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent
 RAW_DIR = PROJECT_ROOT / "data" / "raw"
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+RETRAIN_OUTPUT_DIR = PROJECT_ROOT / "outputs" / "retrain" / "latest"
 
 REQUIRED_RAW_FILES = [
     "application_train.csv",
@@ -78,7 +79,10 @@ def run_diagnostic() -> None:
 
 def run_ml(retrain_ml: bool) -> None:
     mode = "train" if retrain_ml else "evidence"
-    run_command("ml", [sys.executable, "src/step08_train_champion_v3.py", "--mode", mode])
+    command = [sys.executable, "src/step08_train_champion_v3.py", "--mode", mode]
+    if retrain_ml:
+        command.extend(["--output-dir", str(RETRAIN_OUTPUT_DIR)])
+    run_command("ml", command)
 
 
 def run_validate() -> None:

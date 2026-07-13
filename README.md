@@ -95,6 +95,8 @@ By default, the ML stage rebuilds the committed evidence tables. To retrain the 
 python run_pipeline.py --stage all --skip-master --retrain-ml
 ```
 
+Retrain outputs are written to `outputs/retrain/latest/` so the published source-of-truth evidence in `outputs/final/` is not overwritten.
+
 Common stage commands:
 
 ```bash
@@ -115,7 +117,7 @@ Step 8 can be rebuilt directly:
 
 ```bash
 python src/step08_train_champion_v3.py --mode evidence
-python src/step08_train_champion_v3.py --mode train
+python src/step08_train_champion_v3.py --mode train --output-dir outputs/retrain/latest
 ```
 
 `--mode evidence` rebuilds canonical `outputs/final/*.csv` from committed evidence tables. `--mode train` retrains the LightGBM v3-style champion from the processed customer-level table using committed split IDs in `data/splits/`.

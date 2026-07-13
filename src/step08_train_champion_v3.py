@@ -332,9 +332,7 @@ def run_train_mode(train_file: Path, test_file: Path, output_dir: Path) -> None:
             test_rows = sum(1 for _ in handle) - 1
         data_split_rows.append({"split": "test", "rows": test_rows, "default_rate": ""})
 
-    X_fit = prepare_lgbm_frame(X_fit)
-    X_cal = prepare_lgbm_frame(X_cal)
-    X_val = prepare_lgbm_frame(X_val)
+    X_fit, X_cal, X_val = prepare_lgbm_frames(X_fit, X_cal, X_val)
 
     model = LGBMClassifier(
         objective="binary",
@@ -392,18 +390,33 @@ def add_v3_features(df):
     return out
 
 
-def prepare_lgbm_frame(df):
+def prepare_lgbm_frames(X_fit, X_cal, X_val):
     import numpy as np
     import pandas as pd
 
-    out = df.copy()
-    for col in out.columns:
-        if out[col].dtype == "object":
-            out[col] = out[col].fillna("Missing").astype("category")
-        elif pd.api.types.is_numeric_dtype(out[col]):
-            out[col] = out[col].replace([np.inf, -np.inf], np.nan)
-            out[col] = out[col].fillna(out[col].median())
-    return out
+    fit = X_fit.copy()
+    cal = X_cal.copy()
+    val = X_val.copy()
+
+    for col in fit.columns:
+        if pd.api.types.is_numeric_dtype(fit[col]):
+            fit[col] = fit[col].replace([np.inf, -np.inf], np.nan)
+            cal[col] = cal[col].replace([np.inf, -np.inf], np.nan)
+            val[col] = val[col].replace([np.inf, -np.inf], np.nan)
+
+            median = fit[col].median()
+            fit[col] = fit[col].fillna(median)
+            cal[col] = cal[col].fillna(median)
+            val[col] = val[col].fillna(median)
+        else:
+            fit_values = fit[col].fillna("Missing").astype(str)
+            categories = sorted(fit_values.unique())
+
+            fit[col] = pd.Categorical(fit_values, categories=categories)
+            cal[col] = pd.Categorical(cal[col].fillna("Missing").astype(str), categories=categories)
+            val[col] = pd.Categorical(val[col].fillna("Missing").astype(str), categories=categories)
+
+    return fit, cal, val
 
 
 def evaluate_scores(model_name: str, y_true, score, runtime_seconds: float, ks_2samp_func) -> dict[str, object]:
