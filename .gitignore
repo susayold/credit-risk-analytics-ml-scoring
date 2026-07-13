@@ -23,6 +23,9 @@ outputs/**/tmp/
 outputs/**/temp/
 *.log
 
+# Local model retraining outputs
+outputs/retrain/
+
 # Recruiter website build artifacts
 site/node_modules/
 site/.next/
